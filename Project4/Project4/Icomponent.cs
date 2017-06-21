@@ -21,7 +21,7 @@ namespace Project4
     }
     public interface IUpdatable
     {
-        void Update(float dt);
+//paterpimeloteen
     }
 
     interface IComponent : IDrawable, IUpdatable
