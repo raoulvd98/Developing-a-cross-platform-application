@@ -29,6 +29,11 @@ namespace Project4
             this.Velocity = velocity;
             this.Rectangle = rectangle;          
         }
+
+        public void Draw(IDrawVisitor visitor)
+        {
+            visitor.DrawBall(this);
+        }
     }
 
     public class Ball : Entity
@@ -38,6 +43,7 @@ namespace Project4
             this.Velocity = velocity;
             this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
+
     }
 
     public class Paddle : Entity
@@ -51,8 +57,6 @@ namespace Project4
 
     class EntityFactory : IEntityFactory
     {
-        // List where all Paddles en Balls are stored
-        List<Entity> Entities = new List<Entity>();
 
         // Method which create Balls en Paddles
         public Entity Create(int Entitynumber)

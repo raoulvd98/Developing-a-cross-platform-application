@@ -11,7 +11,10 @@ namespace Project4
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
+
+
+
 
         public Game1()
         {
@@ -22,7 +25,12 @@ namespace Project4
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 480;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
-        }
+            System.Console.WriteLine("simon is een droeftoeter");
+}
+        EntityManager EntityManager;
+        IDrawingManager IDrawingManager;
+        IDrawVisitor IDrawVisitor;
+        IUpdateVisitor IUpdateVisitor;
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -35,6 +43,9 @@ namespace Project4
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            EntityConstructor entityConstructor = new EntityConstructor();
+            EntityManager = entityConstructor.Instantiate("1", () => Exit());
+           
         }
 
         /// <summary>
@@ -45,6 +56,8 @@ namespace Project4
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            IDrawingManager = new MonogameDrawingAdapter(spriteBatch, Content);
+            IDrawVisitor = new DefaultDrawVisitor(IDrawingManager);
 
             // TODO: use this.Content to load your game content here
         }
@@ -80,8 +93,11 @@ namespace Project4
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin();
+            EntityManager.Draw(IDrawVisitor);
+            spriteBatch.End();
             
-
+          
 
             // TODO: Add your drawing code here
 

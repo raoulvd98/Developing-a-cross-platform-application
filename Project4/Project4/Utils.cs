@@ -39,7 +39,6 @@ namespace Project4
             this.sprite_batch = sprite_batch;
             this.content_manager = content_manager;
             white_pixel = content_manager.Load<Texture2D>("white_pixel");
-            default_font = content_manager.Load<SpriteFont>("arial");
         }
 
         private Microsoft.Xna.Framework.Color Convert_color(Colour color)
