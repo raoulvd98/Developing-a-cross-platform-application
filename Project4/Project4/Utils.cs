@@ -17,7 +17,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Project4
 {
-    public interface DrawingManager
+    public interface IDrawingManager
     {
         void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color);
         void DrawString(string text, Point top_left_coordinate, int size, Colour color);
@@ -25,7 +25,7 @@ namespace Project4
 
     public enum Colour { White, Black, Blue };
 
-    public class MonogameDrawingAdapter : DrawingManager
+    public class MonogameDrawingAdapter : IDrawingManager
     {
         SpriteBatch sprite_batch;
         ContentManager content_manager;
@@ -39,10 +39,9 @@ namespace Project4
             this.sprite_batch = sprite_batch;
             this.content_manager = content_manager;
             white_pixel = content_manager.Load<Texture2D>("white_pixel");
-            default_font = content_manager.Load<SpriteFont>("arial");
         }
 
-        private Microsoft.Xna.Framework.Color convert_color(Colour color)
+        private Microsoft.Xna.Framework.Color Convert_color(Colour color)
         {
             switch (color)
             {
@@ -59,12 +58,12 @@ namespace Project4
 
         public void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color)
         {
-            sprite_batch.Draw(white_pixel, new Rectangle((int)top_left_coordinate.X, (int)top_left_coordinate.Y, (int)width, (int)height), convert_color(color));
+            sprite_batch.Draw(white_pixel, new Rectangle((int)top_left_coordinate.X, (int)top_left_coordinate.Y, (int)width, (int)height), Convert_color(color));
         }
 
         public void DrawString(string text, Point top_left_coordinate, int size, Colour color)
         {
-            sprite_batch.DrawString(default_font, text, new Vector2(top_left_coordinate.X, top_left_coordinate.Y), convert_color(color));
+            sprite_batch.DrawString(default_font, text, new Vector2(top_left_coordinate.X, top_left_coordinate.Y), Convert_color(color));
         }
     }
 

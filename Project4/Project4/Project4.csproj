@@ -59,10 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity1.cs" />
-    <Compile Include="Sprite Manager.cs" />
+    <Compile Include="Managers.cs" />
+    <Compile Include="Iterator.cs" />
     <Compile Include="Factory.cs" />
-    <Compile Include="Icomponent.cs" />
-    <Compile Include="Iterator+Visitor.cs" />
+    <Compile Include="IComponent.cs" />
+    <Compile Include="Visitor.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,7 +95,9 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\white_pixel.png" />
+    <Content Include="Content\white_pixel.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
