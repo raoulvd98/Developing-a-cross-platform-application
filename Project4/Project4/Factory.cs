@@ -64,11 +64,11 @@ namespace Project4
             switch (Entitynumber)
             {
                 case 0:
-                    return new Ball(new Vector2(RandomNumber(), RandomNumber()),new Rectangle(50,50,10,10));
+                    return new Ball(new Vector2(RandomNumber(), RandomNumber()),new Rectangle(560,378,30,30));
                 case 1:
-                    return new Paddle(new Vector2(0), new Rectangle(10, 50, 10, 50));
+                    return new Paddle(new Vector2(0), new Rectangle(30, 334, 30, 100));
                 case 2:
-                    return new Paddle(new Vector2(0), new Rectangle(-10, 50, 10, 50));
+                    return new Paddle(new Vector2(0), new Rectangle(1150, 334, 30, 100));
             }
             throw new Exception("Entity creation failed");
         }

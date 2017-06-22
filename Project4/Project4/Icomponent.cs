@@ -50,11 +50,6 @@ namespace Project4
             drawing_manager.DrawRectangle(new Point(entity.Rectangle.X, entity.Rectangle.Y), entity.Rectangle.Width, entity.Rectangle.Height, Colour.White);
         }
 
-        public void DrawPaddle(Entity entity)
-        {
-            drawing_manager.DrawRectangle(new Point(entity.Rectangle.X, entity.Rectangle.Y), entity.Rectangle.Width, entity.Rectangle.Height, Colour.White);
-        }
-
         public void DrawEntity(EntityManager entityManager)
         {
             entityManager.entities.Reset();

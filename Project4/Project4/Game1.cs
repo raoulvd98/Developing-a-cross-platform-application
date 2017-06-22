@@ -22,10 +22,9 @@ namespace Project4
             Content.RootDirectory = "Content";
 
             graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
+            graphics.PreferredBackBufferWidth = 768;
+            graphics.PreferredBackBufferHeight = 1280;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
-            System.Console.WriteLine("simon is een droeftoeter");
 }
         EntityManager EntityManager;
         IDrawingManager IDrawingManager;
