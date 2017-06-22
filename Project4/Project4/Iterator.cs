@@ -50,25 +50,25 @@ namespace Project4
     }
 
 
-    public abstract class EntityCreator
-    {
-        public abstract EntityManager<Entity> Instantiate(string option, System.Action exit);
-    }
-
-    public class EntityConstructor : EntityCreator
+    public class EntityConstructor
     {
      
-        public override EntityManager<Entity> Instantiate(string option, Action exit)
+        public EntityManager<Entity> Instantiate(string option, Action exit)
         {
             EntityManager<Entity> entityManager = new EntityManager<Entity>();
             switch (option)
             {
                 default:
                     {
-                        EntityCreator entityCreator = new EntityFactory();
+                        EntityFactory entityCreator = new EntityFactory();
+                        entityManager.entities.Add(entityCreator.Create(0));
+                        entityManager.entities.Add(entityCreator.Create(1));
+                        entityManager.entities.Add(entityCreator.Create(2));
 
-                    }
+                        break;
+                    }                                   
             }
+            return entityManager;
         }
     }
 }
