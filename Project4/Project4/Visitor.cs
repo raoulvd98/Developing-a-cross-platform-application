@@ -12,12 +12,6 @@ using Android.Widget;
 
 namespace Project4
 {
-    public interface IIterator<T>
-    {
-        IOption<T> GetNext();
-        void Reset();
-    }
-
     public interface IOption<T>
     {
         void Visit(Action onNone, Action<T> onSome);
