@@ -60,7 +60,7 @@
   <ItemGroup>
     <Compile Include="Activity1.cs" />
     <Compile Include="Factory.cs" />
-    <Compile Include="Icomponent.cs" />
+    <Compile Include="IComponent.cs" />
     <Compile Include="Iterator+Visitor.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
