@@ -67,4 +67,7 @@ namespace Project4
             sprite_batch.DrawString(default_font, text, new Vector2(top_left_coordinate.X, top_left_coordinate.Y), convert_color(color));
         }
     }
+
+
+
 }
