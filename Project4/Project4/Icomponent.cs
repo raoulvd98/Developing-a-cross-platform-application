@@ -15,8 +15,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project4
 {
-    public interface IUpdatable { void Update(IUpdateVisitor visitor, float dt); void Update(float dt);}
-    public interface IDrawable { void Draw(IDrawVisitor visitor); void Draw(SpriteBatch spriteBatch); }
+    public interface IUpdatable { void Update(IUpdateVisitor visitor, float dt);}
+    public interface IDrawable { void Draw(IDrawVisitor visitor);}
 
 
     interface IComponent : IDrawable, IUpdatable
@@ -24,15 +24,14 @@ namespace Project4
     }
     public interface IUpdateVisitor
     {
-        //void UpdateBar(Bar element, float dt);
-        void UpdateBall(Ball element, float dt);
         //void UpdateScore(Score element, float dt);
+        void UpdateEntity<Entity>(EntityManager<Entity> entityManager, float dt);
     }
 
     public interface IDrawVisitor
     {
         //void DrawBar(Bar element);
-        void DrawBalll(Ball element);
         //void DrawScore(Score element);
+        void DrawEntity<Entity>(EntityManager<Entity> entityManager);
     }
 }

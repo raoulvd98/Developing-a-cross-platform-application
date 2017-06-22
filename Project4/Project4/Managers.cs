@@ -13,16 +13,5 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Project4
 {
-    public class EntityManager : EntityIterator<Entity>, IComponent
-    {
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(float dt)
-        {
-            throw new NotImplementedException();
-        }
-    }
+   
 }
