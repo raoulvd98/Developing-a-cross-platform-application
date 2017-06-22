@@ -13,12 +13,12 @@ using Android.Views;
 using Android.Widget;
 
 namespace Project4
-{
+{ 
     public interface IEntityFactory
     {
         Entity Create(int Entitynumber);
     }
-
+ 
     public class Entity
     {
         public Vector2 Velocity;
@@ -33,7 +33,6 @@ namespace Project4
 
     public class Ball : Entity
     {
-
         public Ball(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
         {
             this.Velocity = velocity;
@@ -52,8 +51,10 @@ namespace Project4
 
     class EntityFactory : IEntityFactory
     {
+        // List where all Paddles en Balls are stored
         List<Entity> Entities = new List<Entity>();
 
+        // Method which create Balls en Paddles
         public Entity Create(int Entitynumber)
         {
             switch (Entitynumber)
@@ -70,6 +71,7 @@ namespace Project4
 
         public int RandomNumber()
         {
+            // Create a random number to determine the velocity
             Random random = new Random();
             int number = random.Next(-1, 1);
 
