@@ -59,9 +59,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Activity1.cs" />
+    <Compile Include="Managers.cs" />
+    <Compile Include="Iterator.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="IComponent.cs" />
-    <Compile Include="Iterator+Visitor.cs" />
+    <Compile Include="Visitor.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
