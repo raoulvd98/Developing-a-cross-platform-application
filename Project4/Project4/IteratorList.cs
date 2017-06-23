@@ -12,52 +12,10 @@ using Android.Widget;
 
 namespace Project4
 {
-    public interface IIterator<T>
-    {
-        IOption<T> GetNext();
-        void Reset();
-    }
-
-    public class EntityManager : IComponent
-    {
-        public List<Entity> entities;
-
-        public void Draw(IDrawVisitor visitor)
-        {
-            visitor.DrawEntity(this);
-        }
-
-        public void Update(IUpdateVisitor visitor, float dt)
-        {
-            visitor.UpdateEntity(this, dt);
-        }
-
-    }
-
-
-    public class EntityConstructor
-    {
-     
-        public EntityManager Instantiate(string option, Action exit)
-        {
-            EntityManager entityManager = new EntityManager();
-            switch (option)
-            {
-                default:
-                    {
-                        EntityFactory entityCreator = new EntityFactory();
-                        entityManager.entities = new List<Entity>();
-                        entityManager.entities.Add(entityCreator.Create(0));
-                        entityManager.entities.Add(entityCreator.Create(1));
-                        entityManager.entities.Add(entityCreator.Create(2));
-
-                        break;
-                    }                                   
-            }
-            return entityManager;
-        }
-    }
-
+    /// <summary>
+    /// Custom list implemenation and custom enumerator.
+    /// Allows developer to create and store lists, and iterate through them.
+    /// </summary>
     public interface Iterator<T>
     {
         IOption<T> GetNext();
@@ -117,6 +75,4 @@ namespace Project4
             return new Some<T>(array[current]);
         }
     }
-
-
 }

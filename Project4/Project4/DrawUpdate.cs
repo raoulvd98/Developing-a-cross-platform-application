@@ -17,14 +17,40 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Project4
 {
+    /// <summary>
+    /// Implements the IDrawable and IUpdatable for easy access.
+    /// </summary>
+    public interface IDrawUpdate : IDrawable, IUpdatable { }
+
+    /// <summary>
+    /// Define interfaces to allow for drawing entities and the screen.
+    /// </summary>
     public interface IDrawingManager
     {
         void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color);
         void DrawString(string text, Point top_left_coordinate, int size, Colour color);
     }
-
+    public interface IDrawable { void Draw(IDrawVisitor visitor);}
+    public interface IDrawVisitor
+    {
+        void DrawScreen(EntityManager entityManager);
+        void DrawEntity(Entity entity);
+    }
     public enum Colour { White, Black, Blue };
 
+    /// <summary>
+    /// Define interfaces to allow for updating entities and screen.
+    /// </summary>
+    public interface IUpdateVisitor
+    {
+        //void UpdateScore(Score element, float dt);
+        void UpdateEntity(EntityManager entityManager, float dt);
+    }
+    public interface IUpdatable { void Update(IUpdateVisitor visitor, float dt); }
+
+    /// <summary>
+    /// Concrete implementations for drawing entities on the screen.
+    /// </summary>
     public class MonogameDrawingAdapter : IDrawingManager
     {
         SpriteBatch sprite_batch;
@@ -67,6 +93,30 @@ namespace Project4
         }
     }
 
+    /// <summary>
+    /// Concrete implementation for visiting the list and drawing.
+    /// </summary>
+    public class DefaultDrawVisitor : IDrawVisitor
+    {
+        IDrawingManager drawing_manager;
 
+        public DefaultDrawVisitor(IDrawingManager drawing_manager)
+        {
+            this.drawing_manager = drawing_manager;
+        }
 
+        public void DrawEntity (Entity entity)
+        {
+            drawing_manager.DrawRectangle(new Point(entity.Rectangle.X, entity.Rectangle.Y), entity.Rectangle.Width, entity.Rectangle.Height, Colour.White);
+        }
+
+        public void DrawScreen(EntityManager entityManager)
+        {
+            entityManager.entities.Reset();
+            while (entityManager.entities.GetNext().Visit(() => false, _ => true))
+            {
+                entityManager.entities.GetCurrent().Visit(() => { }, item => { item.Draw(this); });
+            }   
+        }
+    }
 }
