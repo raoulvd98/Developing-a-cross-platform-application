@@ -29,11 +29,11 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Rectangle(560, 378, 30, 30));
+                    return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Vector2(560, 378), 30, 30,"Ball");
                 case "PaddleLeft":
-                    return new Paddle(new Vector2(0), new Rectangle(30, 334, 30, 100));
+                    return new Paddle(new Vector2(0), new Vector2(30, 334), 30, 100,"Left");
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Rectangle(1150, 334, 30, 100));
+                    return new Paddle(new Vector2(0), new Vector2(1150, 334), 30, 100,"Right");
             }
             throw new Exception("Entity creation failed");
         }
@@ -61,12 +61,18 @@ namespace Project4
     public class Entity
     {
         public Vector2 Velocity;
-        public Rectangle Rectangle;
+        public Vector2 Position;
+        public float width;
+        public float height;
+        public string name;
 
-        public Entity(Vector2 velocity, Rectangle rectangle)
+        public Entity(Vector2 velocity, Vector2 Position, float width, float height, string name)
         {
             this.Velocity = velocity;
-            this.Rectangle = rectangle;          
+            this.Position = Position;
+            this.width = width;
+            this.height = height;
+            this.name = name;
         }
 
         public void Draw(IDrawVisitor visitor)
@@ -76,19 +82,25 @@ namespace Project4
     }
     public class Ball : Entity
     {
-        public Ball(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
+        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
         {
             this.Velocity = velocity;
-            this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            this.Position = Position;
+            this.width = width;
+            this.height = height;
+            this.name = name;
         }
 
     }
     public class Paddle : Entity
     {
-        public Paddle(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
+        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
         {
             this.Velocity = velocity;
-            this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            this.Position = Position;
+            this.width = width;
+            this.height = height;
+            this.name = name;
         }
     }
 
