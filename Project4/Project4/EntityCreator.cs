@@ -33,8 +33,13 @@ namespace Project4
                 case "PaddleLeft":
                     return new Paddle(new Vector2(0), new Vector2(30, 334), 30, 100,"Left");
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Rectangle(1150, 334, 30, 100));
-       
+                    return new Paddle(new Vector2(0), new Vector2(1150, 334), 30, 100, "Right");
+                case "BorderLineTop":
+                    return new BorderLine(new Vector2(0), new Vector2(10, 10), 800, 30, "BorderLineTop");
+                case "BorderLineBottom":
+                    return new BorderLine(new Vector2(0), new Vector2(0, 0), 0, 0, "BorderLineBottom");
+                case "MiddleLine":
+                    return new BorderLine(new Vector2(0), new Vector2(0, 0), 0, 0, "MiddleLine");
             }
             throw new Exception("Entity creation failed");
         }
@@ -106,6 +111,30 @@ namespace Project4
         }
     }
 
+    public class BorderLine : Entity
+    {
+        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
+        {
+            this.Velocity = velocity;
+            this.Position = Position;
+            this.width = width;
+            this.height = height;
+            this.name = name;
+        }
+    }
+
+    public class MiddleLine : Entity
+    {
+        public MiddleLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
+        {
+            this.Velocity = velocity;
+            this.Position = Position;
+            this.width = width;
+            this.height = height;
+            this.name = name;
+        }
+    }
+
     /// <summary>
     /// Allows visitor to visit entities.
     /// </summary>
@@ -155,24 +184,6 @@ namespace Project4
                     }
             }
             return entityManager;
-        }
-    }
-
-    public class BorderLine : Entity
-    {
-        public BorderLine(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
-        {
-            this.Velocity = velocity;
-            this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        }
-    }
-
-    public class MiddleLine : Entity
-    {
-        public MiddleLine(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
-        {
-            this.Velocity = velocity;
-            this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
     }
 }
