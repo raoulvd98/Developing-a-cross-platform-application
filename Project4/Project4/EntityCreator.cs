@@ -22,6 +22,7 @@ namespace Project4
     {
         Entity Create(string Entityname);
     }
+
     class EntityFactory : IEntityFactory
     {
         public Entity Create(string Entityname)
@@ -31,15 +32,15 @@ namespace Project4
                 case "Ball":
                     return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Vector2(560, 378), 30, 30,"Ball");
                 case "PaddleLeft":
-                    return new Paddle(new Vector2(0), new Vector2(30, 334), 30, 100,"Left");
+                    return new Paddle(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight,"Left");
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(1150, 334), 30, 100, "Right");
+                    return new Paddle(new Vector2(0), new Vector2(0.949f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
                 case "BorderLineTop":
-                    return new BorderLine(new Vector2(0), new Vector2(0, 0), 0, 0, "BorderLineTop");
+                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop");
                 case "BorderLineBottom":
-                    return new BorderLine(new Vector2(0), new Vector2(0,0), 0, 0, "BorderLineBottom");
+                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineBottom");
                 case "MiddleLine":
-                    return new BorderLine(new Vector2(0), new Vector2(0, 0), 0, 0, "MiddleLine");
+                    return new BorderLine(new Vector2(0), new Vector2(0.496f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.004f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight, "MiddleLine");
             }
             throw new Exception("Entity creation failed");
         }
