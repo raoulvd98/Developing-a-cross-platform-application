@@ -34,6 +34,12 @@ namespace Project4
                     return new Paddle(new Vector2(0), new Rectangle(30, 334, 30, 100));
                 case "PaddleRight":
                     return new Paddle(new Vector2(0), new Rectangle(1150, 334, 30, 100));
+                case "BorderLineTop":
+                    return new BorderLine(new Vector2(0), new Rectangle(30, 10, 1150, 30));
+                case "BorderLineBottom":
+                    return new BorderLine(new Vector2(0), new Rectangle(30, 728, 1150, 30));
+                case "MiddleLine":
+                    return new MiddleLine(new Vector2(0), new Rectangle(0,0,0,0));
             }
             throw new Exception("Entity creation failed");
         }
@@ -74,6 +80,7 @@ namespace Project4
             visitor.DrawEntity(this);
         }
     }
+
     public class Ball : Entity
     {
         public Ball(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
@@ -81,8 +88,8 @@ namespace Project4
             this.Velocity = velocity;
             this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
-
     }
+
     public class Paddle : Entity
     {
         public Paddle(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
@@ -108,7 +115,6 @@ namespace Project4
         {
             visitor.UpdateEntity(this, dt);
         }
-
     }
 
     /// <summary>
@@ -127,15 +133,39 @@ namespace Project4
                         Entity Ball = entityCreator.Create("Ball");
                         Entity PaddleLeft = entityCreator.Create("PaddleLeft");
                         Entity PaddleRight = entityCreator.Create("PaddleRight");
+                        Entity BorderLineTop = entityCreator.Create("BorderLineTop");
+                        Entity BorderLineBottom = entityCreator.Create("BorderLineBottom");
+                        Entity MiddleLine = entityCreator.Create("MiddleLine");
                         entityManager.entities = new List<Entity>();
                         entityManager.entities.Add(Ball);
                         entityManager.entities.Add(PaddleLeft);
                         entityManager.entities.Add(PaddleRight);
+                        entityManager.entities.Add(BorderLineTop);
+                        entityManager.entities.Add(BorderLineBottom);
+                        entityManager.entities.Add(MiddleLine);
 
                         break;
                     }
             }
             return entityManager;
+        }
+    }
+
+    public class BorderLine : Entity
+    {
+        public BorderLine(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
+        {
+            this.Velocity = velocity;
+            this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+        }
+    }
+
+    public class MiddleLine : Entity
+    {
+        public MiddleLine(Vector2 velocity, Rectangle rectangle) : base(velocity, rectangle)
+        {
+            this.Velocity = velocity;
+            this.Rectangle = new Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
     }
 }

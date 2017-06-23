@@ -12,14 +12,17 @@ namespace Project4
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        public const int Width = 600;
+        public const int Height = 800;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
             graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 768;
-            graphics.PreferredBackBufferHeight = 1280;
+            graphics.PreferredBackBufferWidth = 600;
+            graphics.PreferredBackBufferHeight = 800;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
 }
         EntityManager EntityManager;
@@ -92,8 +95,6 @@ namespace Project4
             EntityManager.Draw(IDrawVisitor);
             spriteBatch.End();
             
-          
-
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
