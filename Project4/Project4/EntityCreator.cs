@@ -175,9 +175,9 @@ namespace Project4
                 default:
                     {
                         EntityFactory entityCreator = new EntityFactory();
-                        Entity Ball = entityCreator.Create("Ball");
-                        Entity PaddleLeft = entityCreator.Create("PaddleLeft");
-                        Entity PaddleRight = entityCreator.Create("PaddleRight");
+                        Ball = entityCreator.Create("Ball");
+                        PaddleLeft = entityCreator.Create("PaddleLeft");
+                        PaddleRight = entityCreator.Create("PaddleRight");
                         Entity BorderLineTop = entityCreator.Create("BorderLineTop");
                         Entity BorderLineBottom = entityCreator.Create("BorderLineBottom");
                         Entity MiddleLine = entityCreator.Create("MiddleLine");
