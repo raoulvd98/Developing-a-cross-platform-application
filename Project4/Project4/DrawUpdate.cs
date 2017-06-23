@@ -133,10 +133,11 @@ namespace Project4
         {
             if (entity.name == "Right")
             {
-                input_manager.Touch().Visit(() => { }, _ => entity.Velocity.X = 10);
+                input_manager.Touch().Visit(() => { }, _ => entity.Velocity.Y = 0.05f);
             }
             entity.Position.X = entity.Position.X + entity.Velocity.X * dt;
             entity.Position.Y = entity.Position.Y + entity.Velocity.Y * dt;
+            
 
         }
 
@@ -145,7 +146,7 @@ namespace Project4
             entityManager.entities.Reset();
             while (entityManager.entities.GetNext().Visit(() => false, _ => true))
             {
-                entityManager.entities.GetCurrent().Visit(() => { }, item => { item.Update(this); });
+                entityManager.entities.GetCurrent().Visit(() => { }, item => { item.Update(this, dt); });
             }
         }
     }

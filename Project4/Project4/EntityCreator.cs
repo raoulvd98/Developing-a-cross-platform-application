@@ -38,7 +38,7 @@ namespace Project4
             throw new Exception("Entity creation failed");
         }
 
-        public int RandomNumber()
+        public float RandomNumber()
         {
             // Create a random number to determine the velocity
             Random random = new Random();
@@ -47,9 +47,9 @@ namespace Project4
             switch (number)
             {
                 case 1:
-                    return 10;
+                    return 0.1f;
                 case -1:
-                    return -10;
+                    return 0.1f;
             }
             return RandomNumber();
         }
@@ -78,6 +78,11 @@ namespace Project4
         public void Draw(IDrawVisitor visitor)
         {
             visitor.DrawEntity(this);
+        }
+
+        public void Update(IUpdateVisitor visitor, float dt)
+        {
+            visitor.UpdateEntity(this, dt);
         }
     }
     public class Ball : Entity
@@ -118,7 +123,7 @@ namespace Project4
 
         public void Update(IUpdateVisitor visitor, float dt)
         {
-            visitor.UpdateEntity(this, dt);
+            visitor.UpdateScreen(this, dt);
         }
 
     }
