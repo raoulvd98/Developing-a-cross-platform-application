@@ -35,9 +35,9 @@ namespace Project4
                 case "PaddleRight":
                     return new Paddle(new Vector2(0), new Vector2(1150, 334), 30, 100, "Right");
                 case "BorderLineTop":
-                    return new BorderLine(new Vector2(0), new Vector2(10, 10), 800, 30, "BorderLineTop");
+                    return new BorderLine(new Vector2(0), new Vector2(0, 0), 0, 0, "BorderLineTop");
                 case "BorderLineBottom":
-                    return new BorderLine(new Vector2(0), new Vector2(0, 0), 0, 0, "BorderLineBottom");
+                    return new BorderLine(new Vector2(0), new Vector2(0,0), 0, 0, "BorderLineBottom");
                 case "MiddleLine":
                     return new BorderLine(new Vector2(0), new Vector2(0, 0), 0, 0, "MiddleLine");
             }
