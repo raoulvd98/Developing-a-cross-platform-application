@@ -137,8 +137,6 @@ namespace Project4
             }
             entity.Position.X = entity.Position.X + entity.Velocity.X * dt;
             entity.Position.Y = entity.Position.Y + entity.Velocity.Y * dt;
-            
-
         }
 
         public void UpdateScreen(EntityManager entityManager, float dt)
