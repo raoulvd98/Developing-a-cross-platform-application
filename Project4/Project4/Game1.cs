@@ -23,6 +23,7 @@ namespace Project4
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
 }
         EntityManager EntityManager;
+        InputManager InputManager;
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
@@ -40,6 +41,8 @@ namespace Project4
             base.Initialize();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
+            InputManager = new MonogameTouch();
+            IUpdateVisitor = new DefaultUpdateVisitor(InputManager);
            
         }
 
@@ -76,6 +79,7 @@ namespace Project4
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
 
+            EntityManager.Update(IUpdateVisitor, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
