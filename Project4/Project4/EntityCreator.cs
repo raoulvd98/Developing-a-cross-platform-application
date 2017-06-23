@@ -56,7 +56,7 @@ namespace Project4
                 case 1:
                     return 0.1f;
                 case -1:
-                    return 0.1f;
+                    return -0.1f;
             }
             return RandomNumber();
         }
