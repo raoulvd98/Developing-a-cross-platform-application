@@ -43,8 +43,8 @@ namespace Project4
     /// </summary>
     public interface IUpdateVisitor
     {
-        //void UpdateScore(Score element, float dt);
-        void UpdateEntity(EntityManager entityManager, float dt);
+        void UpdateScreen(EntityManager entityManager, float dt);
+        void UpdateEntity(Entity entity, float dt);
     }
     public interface IUpdatable { void Update(IUpdateVisitor visitor, float dt); }
 
@@ -107,7 +107,7 @@ namespace Project4
 
         public void DrawEntity (Entity entity)
         {
-            drawing_manager.DrawRectangle(new Point(entity.Rectangle.X, entity.Rectangle.Y), entity.Rectangle.Width, entity.Rectangle.Height, Colour.White);
+            drawing_manager.DrawRectangle(new Point(Convert.ToInt32(entity.Position.X), Convert.ToInt32( entity.Position.Y)), entity.width, entity.height, Colour.White);
         }
 
         public void DrawScreen(EntityManager entityManager)
@@ -117,6 +117,36 @@ namespace Project4
             {
                 entityManager.entities.GetCurrent().Visit(() => { }, item => { item.Draw(this); });
             }   
+        }
+    }
+
+    public class DefaultUpdateVisitor : IUpdateVisitor
+    {
+        InputManager input_manager;
+
+        public DefaultUpdateVisitor(InputManager input_manager)
+        {
+            this.input_manager = input_manager;
+        }
+
+        public void UpdateEntity(Entity entity, float dt)
+        {
+            if (entity.name == "Right")
+            {
+                input_manager.Touch().Visit(() => { }, _ => entity.Velocity.X = 10);
+            }
+            entity.Position.X = entity.Position.X + entity.Velocity.X * dt;
+            entity.Position.Y = entity.Position.Y + entity.Velocity.Y * dt;
+
+        }
+
+        public void UpdateScreen(EntityManager entityManager, float dt)
+        {
+            entityManager.entities.Reset();
+            while (entityManager.entities.GetNext().Visit(() => false, _ => true))
+            {
+                entityManager.entities.GetCurrent().Visit(() => { }, item => { item.Update(this); });
+            }
         }
     }
 }
