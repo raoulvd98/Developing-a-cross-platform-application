@@ -12,6 +12,10 @@ using Android.Widget;
 
 namespace Project4
 {
+    /// <summary>
+    /// Implementation of the visitor design pattern. 
+    /// Allows the code to safely visit certain parts of the code.
+    /// </summary>
     public interface IOption<T>
     {
         void Visit(Action onNone, Action<T> onSome);
@@ -30,7 +34,6 @@ namespace Project4
             return onNone();
         }
     }
-
     public class Some<T> : IOption<T>
     {
         T value;
