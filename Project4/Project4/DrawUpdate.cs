@@ -123,18 +123,21 @@ namespace Project4
     public class DefaultUpdateVisitor : IUpdateVisitor
     {
         InputManager input_manager;
+        EntityConstructor constructor;
 
-        public DefaultUpdateVisitor(InputManager input_manager)
+        public DefaultUpdateVisitor(InputManager input_manager, EntityConstructor constructor)
         {
             this.input_manager = input_manager;
+            this.constructor = constructor;
         }
 
         public void UpdateEntity(Entity entity, float dt)
-        {
-            if (entity.name == "Right")
-            {
-                input_manager.Touch().Visit(() => { }, _ => entity.Velocity.Y = 0.05f);
-            }
+        {           
+
+            //constructor.PaddleLeft.Velocity.Y = constructor.Ball.Position.Y - constructor.PaddleLeft.Position.Y
+
+            input_manager.Touch().Visit(() => constructor.PaddleRight.Velocity.Y = 0.0f, _ => constructor.PaddleRight.Velocity.Y = 0.30f);
+  
             entity.Position.X = entity.Position.X + entity.Velocity.X * dt;
             entity.Position.Y = entity.Position.Y + entity.Velocity.Y * dt;
         }

@@ -164,6 +164,10 @@ namespace Project4
     /// </summary>
     public class EntityConstructor
     {
+        public Entity Ball;
+        public Entity PaddleLeft;
+        public Entity PaddleRight;
+
         public EntityManager Instantiate(string option, Action exit)
         {
             EntityManager entityManager = new EntityManager();
@@ -172,12 +176,13 @@ namespace Project4
                 default:
                     {
                         EntityFactory entityCreator = new EntityFactory();
-                        Entity Ball = entityCreator.Create("Ball");
-                        Entity PaddleLeft = entityCreator.Create("PaddleLeft");
-                        Entity PaddleRight = entityCreator.Create("PaddleRight");
+                        Ball = entityCreator.Create("Ball");
+                        PaddleLeft = entityCreator.Create("PaddleLeft");
+                        PaddleRight = entityCreator.Create("PaddleRight");
                         Entity BorderLineTop = entityCreator.Create("BorderLineTop");
                         Entity BorderLineBottom = entityCreator.Create("BorderLineBottom");
                         Entity MiddleLine = entityCreator.Create("MiddleLine");
+
                         entityManager.entities = new List<Entity>();
                         entityManager.entities.Add(Ball);
                         entityManager.entities.Add(PaddleLeft);
