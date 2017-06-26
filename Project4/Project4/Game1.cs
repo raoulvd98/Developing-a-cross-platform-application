@@ -26,7 +26,7 @@ namespace Project4
             graphics.PreferredBackBufferHeight = ScreenHeight;
         }
         EntityManager EntityManager;
-        InputManager InputManager;
+        MonogameTouch InputManager;
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
