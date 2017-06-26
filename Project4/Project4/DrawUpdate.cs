@@ -143,10 +143,6 @@ namespace Project4
                 float Y = constructor.Ball.Velocity.Y;
                 float X = constructor.Ball.Velocity.X;
                 constructor.Ball.Velocity = new Vector2(X, Y);
-                
-                
-                Console.WriteLine("hello");
-
             }
 
             entity.Position.X = entity.Position.X + entity.Velocity.X * dt;
