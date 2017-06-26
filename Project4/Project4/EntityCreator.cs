@@ -56,7 +56,7 @@ namespace Project4
                 case 1:
                     return 0.1f;
                 case -1:
-                    return -0.1f;
+                    return 0.1f;
             }
             return RandomNumber();
         }
@@ -65,7 +65,7 @@ namespace Project4
     /// <summary>
     /// Definition of all entities.
     /// </summary>
-    public class Entity
+    public abstract class Entity
     {
         public Vector2 Velocity;
         public Vector2 Position;
@@ -90,18 +90,43 @@ namespace Project4
         public void Update(IUpdateVisitor visitor, float dt)
         {
             visitor.UpdateEntity(this, dt);
+
+        }
+
+        public virtual void Checkcollision()
+        {
+
         }
     }
 
     public class Ball : Entity
     {
-        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
+        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity,Position, width, height, name)
         {
             this.Velocity = velocity;
             this.Position = Position;
             this.width = width;
             this.height = height;
             this.name = name;
+        }
+
+        public override void Checkcollision()
+        {
+            
+            if ((Position.Y + 30) >= (0.948f * Game1.ScreenHeight))
+            {
+                float Y = Velocity.Y;
+                float X = Velocity.X;
+                Y = Y * -1;
+                Velocity = new Vector2(X, Y);
+                Console.WriteLine("Ball");
+                Console.WriteLine("Ball");
+                Console.WriteLine("Ball");
+                Console.WriteLine("Ball");
+                Console.WriteLine("Ball");
+                Console.WriteLine("Ball");
+                Console.WriteLine("Ball");
+            }
         }
     }
 
@@ -114,6 +139,10 @@ namespace Project4
             this.width = width;
             this.height = height;
             this.name = name;
+        }
+
+        public override void Checkcollision()
+        {
         }
     }
 

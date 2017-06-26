@@ -142,13 +142,8 @@ namespace Project4
 
             input_manager.Touch().Visit(() => constructor.PaddleRight.Velocity.Y = 0.0f, _ => constructor.PaddleRight.Velocity.Y = 0.30f);
 
-            if ((constructor.Ball.Position.Y + 30) >= (0.948f * Game1.ScreenHeight))
-            {
-                float Y = constructor.Ball.Velocity.Y;
-                float X = constructor.Ball.Velocity.X;
-                constructor.Ball.Velocity = new Vector2(X, Y);
-            }
 
+            entity.Checkcollision();
             entity.Position.X = entity.Position.X + entity.Velocity.X * dt;
             entity.Position.Y = entity.Position.Y + entity.Velocity.Y * dt;
         }
