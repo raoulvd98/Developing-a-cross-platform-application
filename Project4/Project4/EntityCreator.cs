@@ -30,7 +30,7 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Vector2(560, 378), 30, 30,"Ball");
+                    return new Ball(new Vector2(0.2f,0), new Vector2(560, 378), 30, 30,"Ball");
                 case "PaddleLeft":
                     return new Paddle(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight,"Left");
                 case "PaddleRight":
@@ -56,7 +56,7 @@ namespace Project4
                 case 1:
                     return 0.1f;
                 case -1:
-                    return -0.1f;
+                    return 0.1f;
             }
             return RandomNumber();
         }
@@ -65,7 +65,7 @@ namespace Project4
     /// <summary>
     /// Definition of all entities.
     /// </summary>
-    public class Entity
+    public abstract class Entity
     {
         public Vector2 Velocity;
         public Vector2 Position;
@@ -90,18 +90,48 @@ namespace Project4
         public void Update(IUpdateVisitor visitor, float dt)
         {
             visitor.UpdateEntity(this, dt);
+
+        }
+
+        public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
+        {
+
         }
     }
 
     public class Ball : Entity
     {
-        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
+        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity,Position, width, height, name)
         {
             this.Velocity = velocity;
             this.Position = Position;
             this.width = width;
             this.height = height;
             this.name = name;
+        }
+
+        public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
+        {
+            
+            if ((Position.Y + 30) >= (0.948f * Game1.ScreenHeight) || (Position.Y - 30) <= (0.013f * Game1.ScreenHeight))
+            {
+                float Y = Velocity.Y;
+                float X = Velocity.X;
+                Y = Y * -1;
+                Velocity = new Vector2(X, Y);
+            }
+
+            
+            if (((Position.X) <= (PaddleLeft.Position.X + PaddleLeft.width) && (Position.Y + height) >= (PaddleLeft.Position.Y) && (Position.Y) <= (PaddleLeft.Position.Y + PaddleLeft.height))
+                || ((Position.X + width) >= (PaddleRight.Position.X) && (Position.Y + height) >= (PaddleRight.Position.Y) && (Position.Y) <= (PaddleRight.Position.Y + PaddleRight.height)))
+            {
+               
+                    float Y = Velocity.Y;
+                    float X = Velocity.X;
+                    X = X * -1;
+                    Velocity = new Vector2(X, Y);
+
+            }
         }
     }
 
