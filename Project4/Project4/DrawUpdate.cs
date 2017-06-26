@@ -134,16 +134,11 @@ namespace Project4
 
         public void UpdateEntity(Entity entity, float dt)
         {
-
-            //constructor.PaddleLeft.Velocity.Y = Convert.ToInt32(constructor.Ball.Position.Y) - Convert.ToInt32(constructor.PaddleLeft.Position.Y);
-            constructor.PaddleLeft.Velocity.Y = constructor.Ball.Velocity.Y - 0.015f;
+            constructor.PaddleLeft.Velocity.Y = constructor.Ball.Velocity.Y - 0f;
         
-            //constructor.PaddleLeft.Velocity.Y = constructor.Ball.Position.Y - constructor.PaddleLeft.Position.Y
-
             input_manager.Touch().Visit(() => constructor.PaddleRight.Velocity.Y = 0.0f, _ => constructor.PaddleRight.Velocity.Y = 0.30f);
 
-
-            entity.Checkcollision();
+            entity.Checkcollision(constructor.PaddleLeft, constructor.PaddleRight);
             entity.Position.X = entity.Position.X + entity.Velocity.X * dt;
             entity.Position.Y = entity.Position.Y + entity.Velocity.Y * dt;
         }
