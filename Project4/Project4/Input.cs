@@ -26,7 +26,10 @@ namespace Project4
     }
 
     public class MonogameTouch : InputManager
-    { 
+    {
+        public int touchX;
+        public int touchY;
+
         public IOption<Point> Touch()
         {
             TouchCollection touch = TouchPanel.GetState();

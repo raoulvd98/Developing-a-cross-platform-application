@@ -29,7 +29,6 @@ namespace Project4
     public interface IDrawingManager
     {
         void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color);
-        void DrawString(string text, Point top_left_coordinate, int size, Colour color);
     }
     public interface IDrawable { void Draw(IDrawVisitor visitor);}
     public interface IDrawVisitor
@@ -58,8 +57,6 @@ namespace Project4
         ContentManager content_manager;
 
         Texture2D white_pixel;
-        SpriteFont default_font;
-        Game game;
 
         public MonogameDrawingAdapter(SpriteBatch sprite_batch, ContentManager content_manager)
         {
@@ -86,11 +83,6 @@ namespace Project4
         public void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color)
         {
             sprite_batch.Draw(white_pixel, new Rectangle((int)top_left_coordinate.X, (int)top_left_coordinate.Y, (int)width, (int)height), Convert_color(color));
-        }
-
-        public void DrawString(string text, Point top_left_coordinate, int size, Colour color)
-        {
-            sprite_batch.DrawString(default_font, text, new Vector2(top_left_coordinate.X, top_left_coordinate.Y), Convert_color(color));
         }
     }
 
