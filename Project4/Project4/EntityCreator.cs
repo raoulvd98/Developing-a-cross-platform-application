@@ -34,7 +34,7 @@ namespace Project4
                 case "PaddleLeft":
                     return new Paddle(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight,"Left");
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(0.949f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
+                    return new Paddle(new Vector2(0), new Vector2(0.950f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
                 case "BorderLineTop":
                     return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop");
                 case "BorderLineBottom":
@@ -56,7 +56,7 @@ namespace Project4
                 case 1:
                     return 0.1f;
                 case -1:
-                    return 0.1f;
+                    return -0.1f;
             }
             return RandomNumber();
         }
@@ -164,6 +164,10 @@ namespace Project4
     /// </summary>
     public class EntityConstructor
     {
+        public Entity Ball;
+        public Entity PaddleLeft;
+        public Entity PaddleRight;
+
         public EntityManager Instantiate(string option, Action exit)
         {
             EntityManager entityManager = new EntityManager();
@@ -172,12 +176,13 @@ namespace Project4
                 default:
                     {
                         EntityFactory entityCreator = new EntityFactory();
-                        Entity Ball = entityCreator.Create("Ball");
-                        Entity PaddleLeft = entityCreator.Create("PaddleLeft");
-                        Entity PaddleRight = entityCreator.Create("PaddleRight");
+                        Ball = entityCreator.Create("Ball");
+                        PaddleLeft = entityCreator.Create("PaddleLeft");
+                        PaddleRight = entityCreator.Create("PaddleRight");
                         Entity BorderLineTop = entityCreator.Create("BorderLineTop");
                         Entity BorderLineBottom = entityCreator.Create("BorderLineBottom");
                         Entity MiddleLine = entityCreator.Create("MiddleLine");
+
                         entityManager.entities = new List<Entity>();
                         entityManager.entities.Add(Ball);
                         entityManager.entities.Add(PaddleLeft);
