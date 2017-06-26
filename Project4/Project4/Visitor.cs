@@ -12,19 +12,17 @@ using Android.Widget;
 
 namespace Project4
 {
-    public interface Iterator<T>
-    {
-        Option<T> GetNext();
-        void Reset();
-    }
-
-    public interface Option<T>
+    /// <summary>
+    /// Implementation of the visitor design pattern. 
+    /// Allows the code to safely visit certain parts of the code.
+    /// </summary>
+    public interface IOption<T>
     {
         void Visit(Action onNone, Action<T> onSome);
         U Visit<U>(Func<U> onNone, Func<T, U> onSome);
     }
 
-    public class None<T> : Option<T>
+    public class None<T> : IOption<T>
     {
         public void Visit(Action onNone, Action<T> onSome)
         {
@@ -36,8 +34,7 @@ namespace Project4
             return onNone();
         }
     }
-
-    public class Some<T> : Option<T>
+    public class Some<T> : IOption<T>
     {
         T value;
         public Some(T value) { this.value = value; }

@@ -11,7 +11,9 @@ namespace Project4
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+
+        public const int ScreenWidth = 1195;
+        public const int ScreenHeight = 767;
 
         public Game1()
         {
@@ -19,10 +21,15 @@ namespace Project4
             Content.RootDirectory = "Content";
 
             graphics.IsFullScreen = true;
-            graphics.PreferredBackBufferWidth = 800;
-            graphics.PreferredBackBufferHeight = 480;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
+            graphics.PreferredBackBufferWidth = ScreenWidth;
+            graphics.PreferredBackBufferHeight = ScreenHeight;
         }
+        EntityManager EntityManager;
+        InputManager InputManager;
+        IDrawingManager IDrawingManager;
+        IDrawVisitor IDrawVisitor;
+        IUpdateVisitor IUpdateVisitor;
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -35,6 +42,11 @@ namespace Project4
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            EntityConstructor entityConstructor = new EntityConstructor();
+            EntityManager = entityConstructor.Instantiate("1", () => Exit());
+            InputManager = new MonogameTouch();
+            IUpdateVisitor = new DefaultUpdateVisitor(InputManager, entityConstructor);
+           
         }
 
         /// <summary>
@@ -45,6 +57,8 @@ namespace Project4
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            IDrawingManager = new MonogameDrawingAdapter(spriteBatch, Content);
+            IDrawVisitor = new DefaultDrawVisitor(IDrawingManager);
 
             // TODO: use this.Content to load your game content here
         }
@@ -68,6 +82,7 @@ namespace Project4
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 Exit();
 
+            EntityManager.Update(IUpdateVisitor, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -80,9 +95,10 @@ namespace Project4
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin();
+            EntityManager.Draw(IDrawVisitor);
+            spriteBatch.End();
             
-
-
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
