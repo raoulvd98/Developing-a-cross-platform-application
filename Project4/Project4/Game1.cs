@@ -25,6 +25,7 @@ namespace Project4
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
         }
+
         EntityManager EntityManager;
         MonogameTouch InputManager;
         IDrawingManager IDrawingManager;
@@ -46,7 +47,6 @@ namespace Project4
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
             InputManager = new MonogameTouch();
             IUpdateVisitor = new DefaultUpdateVisitor(InputManager, entityConstructor);
-           
         }
 
         /// <summary>
