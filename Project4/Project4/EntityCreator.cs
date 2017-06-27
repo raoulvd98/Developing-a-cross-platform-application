@@ -99,7 +99,7 @@ namespace Project4
             Position.Y = Position.Y + Velocity.Y * dt;
         }
 
-        public virtual void CheckOutOfBounds()
+        public virtual void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
 
         }
@@ -127,7 +127,7 @@ namespace Project4
                     Velocity = new Vector2(X, Y);
             }
         }
-        public override void CheckOutOfBounds()
+        public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
             if (((Position.X) >= Game1.ScreenWidth) || (Position.X <= -30))
             {
@@ -135,6 +135,8 @@ namespace Project4
                 Position.Y = 378;
                 Velocity = new Vector2(0,0);
                 Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
+                PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
+                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
             }
         }
         public override void ChangeVelocity(MonogameTouch input_manager, float dt)

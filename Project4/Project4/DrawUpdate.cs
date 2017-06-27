@@ -126,7 +126,7 @@ namespace Project4
             constructor.PaddleLeft.Velocity.Y = constructor.Ball.Velocity.Y - 0f;
             entity.Checkcollision(constructor.PaddleLeft, constructor.PaddleRight);
             entity.ChangeVelocity(input_manager, dt);
-            entity.CheckOutOfBounds();
+            entity.CheckOutOfBounds(constructor.PaddleLeft, constructor.PaddleRight);
         }
 
         public void UpdateScreen(EntityManager entityManager, float dt)
