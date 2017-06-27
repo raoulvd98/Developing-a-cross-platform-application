@@ -36,7 +36,7 @@ namespace Project4
         void DrawScreen(EntityManager entityManager);
         void DrawEntity(Entity entity);
     }
-    public enum Colour { White, Black, Blue, Hotpink };
+    public enum Colour { White, Hotpink };
 
     /// <summary>
     /// Define interfaces to allow for updating entities and screen.
@@ -69,12 +69,8 @@ namespace Project4
         {
             switch (color)
             {
-                case Colour.Black:
-                    return Microsoft.Xna.Framework.Color.Black;
                 case Colour.White:
                     return Microsoft.Xna.Framework.Color.White;
-                case Colour.Blue:
-                    return Microsoft.Xna.Framework.Color.Blue;
                 case Colour.Hotpink:
                     return Microsoft.Xna.Framework.Color.HotPink;
                 default:
