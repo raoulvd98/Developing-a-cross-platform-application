@@ -17,16 +17,24 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace Project4
 {
+    /// <summary>
+    /// The InputManager registers if the screen is touched.
+    /// </summary>
     public interface InputManager
     {
         IOption<Point> Touch();
     }
 
+    /// <summary>
+    /// Enables the InputManager to communicate with Monogame.
+    /// </summary>
     public class MonogameTouch : InputManager
-    { 
+    {
+        public int touchX;
+        public int touchY;
+
         public IOption<Point> Touch()
         {
             TouchCollection touch = TouchPanel.GetState();
