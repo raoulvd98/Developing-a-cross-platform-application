@@ -11,6 +11,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using System.Threading;
 
 namespace Project4
 {
@@ -29,11 +30,11 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(0.2f,0), new Vector2(560, 378), 30, 30,"Ball");
+                    return new Ball(new Vector2(RandomNumber(),RandomNumber()), new Vector2(560, 378), 30, 30,"Ball");
                 case "PaddleLeft":
-                    return new Paddle(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight,"Left");
+                    return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight,"Left");
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(0.950f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
+                    return new Paddle(new Vector2(0), new Vector2(0.961f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
                 case "BorderLineTop":
                     return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop");
                 case "BorderLineBottom":
@@ -44,7 +45,7 @@ namespace Project4
             throw new Exception("Entity creation failed");
         }
 
-        public float RandomNumber()
+        public static float RandomNumber()
         {
             // Create a random number to determine the velocity
             Random random = new Random();
@@ -53,9 +54,9 @@ namespace Project4
             switch (number)
             {
                 case 1:
-                    return 0.1f;
+                    return 0.2f;
                 case -1:
-                    return 0.1f;
+                    return 0.2f;
             }
             return RandomNumber();
         }
@@ -97,6 +98,11 @@ namespace Project4
             Position.X = Position.X + Velocity.X * dt;
             Position.Y = Position.Y + Velocity.Y * dt;
         }
+
+        public virtual void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
+        {
+
+        }
     }
     public class Ball : Entity
     {
@@ -121,7 +127,18 @@ namespace Project4
                     Velocity = new Vector2(X, Y);
             }
         }
-
+        public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
+        {
+            if (((Position.X) >= Game1.ScreenWidth) || (Position.X <= -30))
+            {
+                Position.X = 560;
+                Position.Y = 378;
+                Velocity = new Vector2(0,0);
+                Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
+                PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
+                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
+            }
+        }
         public override void ChangeVelocity(MonogameTouch input_manager, float dt)
         {
             base.ChangeVelocity(input_manager, dt);
@@ -155,9 +172,11 @@ namespace Project4
             {
                 case "BorderLineTop":
                     if ((PaddleRight.Position.Y) <= Position.Y + height) { PaddleRight.Position.Y += 9.0f; }
+                    if ((PaddleLeft.Position.Y) <= Position.Y + height) { PaddleLeft.Position.Y += 9.0f; }
                     break;
                 case "BorderLineBottom":
                     if ((PaddleRight.Position.Y + PaddleRight.height) >= Position.Y) { PaddleRight.Position.Y -= 9.0f; }
+                    if ((PaddleLeft.Position.Y + PaddleLeft.height) >= Position.Y) { PaddleLeft.Position.Y -= 9.0f; }
                     break;
             }
         }
