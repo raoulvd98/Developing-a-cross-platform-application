@@ -34,7 +34,7 @@ namespace Project4
                 case "PaddleLeft":
                     return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleLeft");
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(0.976f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
+                    return new Paddle(new Vector2(0), new Vector2(0.977f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
                 case "BorderLineTop":
                     return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop");
                 case "BorderLineBottom":
