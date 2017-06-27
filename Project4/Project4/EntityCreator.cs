@@ -30,17 +30,17 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(RandomNumber(),RandomNumber()), new Vector2(560, 378), 30, 30,"Ball");
+                    return new Ball(new Vector2(RandomNumber(),RandomNumber()), new Vector2(560, 378), 30, 30,"Ball", 0);
                 case "PaddleLeft":
-                    return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleLeft");
+                    return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleLeft", 0);
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(0.961f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleRight");
+                    return new Paddle(new Vector2(0), new Vector2(0.961f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleRight", 0);
                 case "BorderLineTop":
-                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop");
+                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop", 0);
                 case "BorderLineBottom":
-                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineBottom");
+                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineBottom", 0);
                 case "MiddleLine":
-                    return new BorderLine(new Vector2(0), new Vector2(0.496f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.004f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight, "MiddleLine");
+                    return new BorderLine(new Vector2(0), new Vector2(0.496f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.004f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight, "MiddleLine", 0);
             }
             throw new Exception("Entity creation failed");
         }
@@ -72,14 +72,16 @@ namespace Project4
         public float width;
         public float height;
         public string name;
+        public int score;
 
-        public Entity(Vector2 velocity, Vector2 Position, float width, float height, string name)
+        public Entity(Vector2 velocity, Vector2 Position, float width, float height, string name, int score)
         {
             this.Velocity = velocity;
             this.Position = Position;
             this.width = width;
             this.height = height;
             this.name = name;
+            this.score = score;
         }
 
         public void Draw(IDrawVisitor visitor)
@@ -98,7 +100,7 @@ namespace Project4
             Position.X = Position.X + Velocity.X * dt;
             Position.Y = Position.Y + Velocity.Y * dt;
         }
-
+        public virtual void AddScore(Entity paddle) { }
         public virtual void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
 
@@ -106,7 +108,7 @@ namespace Project4
     }
     public class Ball : Entity
     {
-        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity,Position, width, height, name){}
+        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
 
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
@@ -117,36 +119,53 @@ namespace Project4
                 Y = Y * -1;
                 Velocity = new Vector2(X, Y);
             }
-            
+
             if (((Position.X) <= (PaddleLeft.Position.X + PaddleLeft.width) && (Position.Y + height) >= (PaddleLeft.Position.Y) && (Position.Y) <= (PaddleLeft.Position.Y + PaddleLeft.height))
                 || ((Position.X + width) >= (PaddleRight.Position.X) && (Position.Y + height) >= (PaddleRight.Position.Y) && (Position.Y) <= (PaddleRight.Position.Y + PaddleRight.height)))
             {
-                    float Y = Velocity.Y;
-                    float X = Velocity.X;
-                    X = X * -1;
-                    Velocity = new Vector2(X, Y);
+                float Y = Velocity.Y;
+                float X = Velocity.X;
+                X = X * -1;
+                Velocity = new Vector2(X, Y);
             }
         }
         public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
-            if (((Position.X) >= Game1.ScreenWidth) || (Position.X <= -30))
+            if (Position.X <= -30)
             {
                 Position.X = 560;
                 Position.Y = 378;
-                Velocity = new Vector2(0,0);
+                Velocity = new Vector2(0, 0);
                 Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
                 PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
                 PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
+                AddScore(PaddleRight); // PaddleRight because this paddle scores on the left side
             }
+            if ((Position.X) >= Game1.ScreenWidth)
+            {
+                Position.X = 560;
+                Position.Y = 378;
+                Velocity = new Vector2(0, 0);
+                Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
+                PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
+                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
+                AddScore(PaddleLeft); // PaddleLeft because this paddle scores on the right side
+            }
+            Console.WriteLine(PaddleLeft.score + "  " + PaddleRight.score);
         }
         public override void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
         }
+        public override void AddScore(Entity paddle)
+        {
+            base.AddScore(paddle);
+            paddle.score += 1;
+        }
     }
     public class Paddle : Entity
     {
-        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
+        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score){}
         public override void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
@@ -170,7 +189,7 @@ namespace Project4
     }
     public class BorderLine : Entity
     {
-        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
+        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score){}
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
             switch (name)
@@ -186,6 +205,7 @@ namespace Project4
             }
         }
     }
+
 
     /// <summary>
     /// Allows visitor to visit entities.
@@ -213,7 +233,6 @@ namespace Project4
         public Entity Ball;
         public Entity PaddleLeft;
         public Entity PaddleRight;
-
         public EntityManager Instantiate(string option, Action exit)
         {
             EntityManager entityManager = new EntityManager();
@@ -236,7 +255,6 @@ namespace Project4
                         entityManager.entities.Add(BorderLineTop);
                         entityManager.entities.Add(BorderLineBottom);
                         entityManager.entities.Add(MiddleLine);
-
                         break;
                     }
             }
