@@ -124,11 +124,9 @@ namespace Project4
         public void UpdateEntity(Entity entity, float dt)
         {
             constructor.PaddleLeft.Velocity.Y = constructor.Ball.Velocity.Y - 0f;
-           
-            
-
             entity.Checkcollision(constructor.PaddleLeft, constructor.PaddleRight);
             entity.ChangeVelocity(input_manager, dt);
+            entity.CheckOutOfBounds();
         }
 
         public void UpdateScreen(EntityManager entityManager, float dt)

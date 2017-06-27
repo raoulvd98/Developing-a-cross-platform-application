@@ -11,6 +11,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using System.Threading;
 
 namespace Project4
 {
@@ -44,7 +45,7 @@ namespace Project4
             throw new Exception("Entity creation failed");
         }
 
-        public float RandomNumber()
+        public static float RandomNumber()
         {
             // Create a random number to determine the velocity
             Random random = new Random();
@@ -97,6 +98,11 @@ namespace Project4
             Position.X = Position.X + Velocity.X * dt;
             Position.Y = Position.Y + Velocity.Y * dt;
         }
+
+        public virtual void CheckOutOfBounds()
+        {
+
+        }
     }
     public class Ball : Entity
     {
@@ -121,7 +127,16 @@ namespace Project4
                     Velocity = new Vector2(X, Y);
             }
         }
-
+        public override void CheckOutOfBounds()
+        {
+            if (((Position.X) >= Game1.ScreenWidth) || (Position.X <= -30))
+            {
+                Position.X = 560;
+                Position.Y = 378;
+                Velocity = new Vector2(0,0);
+                Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
+            }
+        }
         public override void ChangeVelocity(MonogameTouch input_manager, float dt)
         {
             base.ChangeVelocity(input_manager, dt);
