@@ -94,7 +94,7 @@ namespace Project4
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.White);
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             EntityManager.Draw(IDrawVisitor);
             spriteBatch.End();
