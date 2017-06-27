@@ -32,8 +32,7 @@ namespace Project4
     /// </summary>
     public class MonogameTouch : InputManager
     {
-        public int touchX;
-        public int touchY;
+        public Point touchXY;
 
         public IOption<Point> Touch()
         {
@@ -45,7 +44,7 @@ namespace Project4
                 {
                     int touchX = Convert.ToInt32(touch[0].Position.X);
                     int touchY = Convert.ToInt32(touch[0].Position.Y);
-                    Point touchXY = new Point(touchX, touchY);
+                    touchXY = new Point(touchX, touchY);
                     return new Some<Point>(touchXY);
                 }
             }

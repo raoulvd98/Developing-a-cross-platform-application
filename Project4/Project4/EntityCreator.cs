@@ -91,9 +91,11 @@ namespace Project4
             visitor.UpdateEntity(this, dt);
         }
 
-        public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
+        public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight) { }
+        public virtual void ChangeVelocity(MonogameTouch input_manager, float dt)
         {
-
+            Position.X = Position.X + Velocity.X * dt;
+            Position.Y = Position.Y + Velocity.Y * dt;
         }
     }
     public class Ball : Entity
@@ -119,10 +121,30 @@ namespace Project4
                     Velocity = new Vector2(X, Y);
             }
         }
+
+        public override void ChangeVelocity(MonogameTouch input_manager, float dt)
+        {
+            base.ChangeVelocity(input_manager, dt);
+        }
     }
     public class Paddle : Entity
     {
         public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
+        public override void ChangeVelocity(MonogameTouch input_manager, float dt)
+        {
+            base.ChangeVelocity(input_manager, dt);
+            input_manager.Touch().Visit(
+                () => Velocity.Y = 0,
+                _ => MousePosition(input_manager.touchXY));
+           // input_manager.Touch().Visit(() => Velocity.Y = 0.0f, _ => Velocity.Y = 0.30f);
+        }
+        public float MousePosition(Point touchXY)
+        {
+            if ( touchXY.Y >= (Game1.ScreenHeight / 2)) { Velocity.Y = 0.30f; }
+            else { Velocity.Y = -0.30f; }
+            Console.WriteLine(touchXY.Y);
+            return Velocity.Y;
+        }
     }
     public class BorderLine : Entity
     {
