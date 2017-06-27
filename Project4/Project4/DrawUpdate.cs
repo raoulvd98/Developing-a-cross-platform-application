@@ -36,7 +36,7 @@ namespace Project4
         void DrawScreen(EntityManager entityManager);
         void DrawEntity(Entity entity);
     }
-    public enum Colour { White, Black, Blue };
+    public enum Colour { White, Black, Blue, Hotpink };
 
     /// <summary>
     /// Define interfaces to allow for updating entities and screen.
@@ -75,6 +75,8 @@ namespace Project4
                     return Microsoft.Xna.Framework.Color.White;
                 case Colour.Blue:
                     return Microsoft.Xna.Framework.Color.Blue;
+                case Colour.Hotpink:
+                    return Microsoft.Xna.Framework.Color.HotPink;
                 default:
                     return Microsoft.Xna.Framework.Color.White;
             }
@@ -100,7 +102,7 @@ namespace Project4
 
         public void DrawEntity (Entity entity)
         {
-            drawing_manager.DrawRectangle(new Point(Convert.ToInt32(entity.Position.X), Convert.ToInt32( entity.Position.Y)), entity.width, entity.height, Colour.White);
+            drawing_manager.DrawRectangle(new Point(Convert.ToInt32(entity.Position.X), Convert.ToInt32( entity.Position.Y)), entity.width, entity.height, Colour.Hotpink);
         }
 
         public void DrawScreen(EntityManager entityManager)
