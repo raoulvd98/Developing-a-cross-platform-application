@@ -112,7 +112,6 @@ namespace Project4
             }   
         }
     }
-
     public class DefaultUpdateVisitor : IUpdateVisitor
     {
         InputManager input_manager;

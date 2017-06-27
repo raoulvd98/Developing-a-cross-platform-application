@@ -22,7 +22,6 @@ namespace Project4
     {
         Entity Create(string Entityname);
     }
-
     class EntityFactory : IEntityFactory
     {
         public Entity Create(string Entityname)
@@ -97,7 +96,6 @@ namespace Project4
 
         }
     }
-
     public class Ball : Entity
     {
         public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity,Position, width, height, name){}
@@ -122,12 +120,10 @@ namespace Project4
             }
         }
     }
-
     public class Paddle : Entity
     {
         public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
     }
-
     public class BorderLine : Entity
     {
         public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
