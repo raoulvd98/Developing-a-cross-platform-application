@@ -140,7 +140,7 @@ namespace Project4
         }
         public float MousePosition(Point touchXY)
         {
-            if ( touchXY.Y >= (Game1.ScreenHeight / 2)) { Velocity.Y = 0.30f; }
+            if ( touchXY.Y >= (Position.Y)) { Velocity.Y = 0.30f; }
             else { Velocity.Y = -0.30f; }
             Console.WriteLine(touchXY.Y);
             return Velocity.Y;
@@ -149,6 +149,18 @@ namespace Project4
     public class BorderLine : Entity
     {
         public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
+        public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
+        {
+            switch (name)
+            {
+                case "BorderLineTop":
+                    if ((PaddleRight.Position.Y) <= Position.Y + height) { PaddleRight.Position.Y += 9.0f; }
+                    break;
+                case "BorderLineBottom":
+                    if ((PaddleRight.Position.Y + PaddleRight.height) >= Position.Y) { PaddleRight.Position.Y -= 9.0f; }
+                    break;
+            }
+        }
     }
 
     /// <summary>
