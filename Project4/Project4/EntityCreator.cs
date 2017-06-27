@@ -30,7 +30,7 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(0.2f,0), new Vector2(560, 378), 30, 30,"Ball");
+                    return new Ball(new Vector2(RandomNumber(),RandomNumber()), new Vector2(560, 378), 30, 30,"Ball");
                 case "PaddleLeft":
                     return new Paddle(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight,"Left");
                 case "PaddleRight":
@@ -54,9 +54,9 @@ namespace Project4
             switch (number)
             {
                 case 1:
-                    return 0.1f;
+                    return 0.2f;
                 case -1:
-                    return 0.1f;
+                    return 0.2f;
             }
             return RandomNumber();
         }
@@ -155,7 +155,7 @@ namespace Project4
         }
         public float MousePosition(Point touchXY)
         {
-            if ( touchXY.Y >= (Game1.ScreenHeight / 2)) { Velocity.Y = 0.30f; }
+            if ( touchXY.Y >= (Position.Y)) { Velocity.Y = 0.30f; }
             else { Velocity.Y = -0.30f; }
             Console.WriteLine(touchXY.Y);
             return Velocity.Y;
@@ -164,6 +164,18 @@ namespace Project4
     public class BorderLine : Entity
     {
         public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
+        public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
+        {
+            switch (name)
+            {
+                case "BorderLineTop":
+                    if ((PaddleRight.Position.Y) <= Position.Y + height) { PaddleRight.Position.Y += 9.0f; }
+                    break;
+                case "BorderLineBottom":
+                    if ((PaddleRight.Position.Y + PaddleRight.height) >= Position.Y) { PaddleRight.Position.Y -= 9.0f; }
+                    break;
+            }
+        }
     }
 
     /// <summary>
