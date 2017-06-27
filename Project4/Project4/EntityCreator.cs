@@ -22,7 +22,6 @@ namespace Project4
     {
         Entity Create(string Entityname);
     }
-
     class EntityFactory : IEntityFactory
     {
         public Entity Create(string Entityname)
@@ -90,29 +89,21 @@ namespace Project4
         public void Update(IUpdateVisitor visitor, float dt)
         {
             visitor.UpdateEntity(this, dt);
-
         }
 
-        public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
+        public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight) { }
+        public virtual void ChangeVelocity(MonogameTouch input_manager, float dt)
         {
-
+            Position.X = Position.X + Velocity.X * dt;
+            Position.Y = Position.Y + Velocity.Y * dt;
         }
     }
-
     public class Ball : Entity
     {
-        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity,Position, width, height, name)
-        {
-            this.Velocity = velocity;
-            this.Position = Position;
-            this.width = width;
-            this.height = height;
-            this.name = name;
-        }
+        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity,Position, width, height, name){}
 
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
-            
             if ((Position.Y + 30) >= (0.948f * Game1.ScreenHeight) || (Position.Y - 30) <= (0.013f * Game1.ScreenHeight))
             {
                 float Y = Velocity.Y;
@@ -120,55 +111,44 @@ namespace Project4
                 Y = Y * -1;
                 Velocity = new Vector2(X, Y);
             }
-
             
             if (((Position.X) <= (PaddleLeft.Position.X + PaddleLeft.width) && (Position.Y + height) >= (PaddleLeft.Position.Y) && (Position.Y) <= (PaddleLeft.Position.Y + PaddleLeft.height))
                 || ((Position.X + width) >= (PaddleRight.Position.X) && (Position.Y + height) >= (PaddleRight.Position.Y) && (Position.Y) <= (PaddleRight.Position.Y + PaddleRight.height)))
             {
-               
                     float Y = Velocity.Y;
                     float X = Velocity.X;
                     X = X * -1;
                     Velocity = new Vector2(X, Y);
-
             }
         }
-    }
 
+        public override void ChangeVelocity(MonogameTouch input_manager, float dt)
+        {
+            base.ChangeVelocity(input_manager, dt);
+        }
+    }
     public class Paddle : Entity
     {
-        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
+        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
+        public override void ChangeVelocity(MonogameTouch input_manager, float dt)
         {
-            this.Velocity = velocity;
-            this.Position = Position;
-            this.width = width;
-            this.height = height;
-            this.name = name;
+            base.ChangeVelocity(input_manager, dt);
+            input_manager.Touch().Visit(
+                () => Velocity.Y = 0,
+                _ => MousePosition(input_manager.touchXY));
+           // input_manager.Touch().Visit(() => Velocity.Y = 0.0f, _ => Velocity.Y = 0.30f);
+        }
+        public float MousePosition(Point touchXY)
+        {
+            if ( touchXY.Y >= (Game1.ScreenHeight / 2)) { Velocity.Y = 0.30f; }
+            else { Velocity.Y = -0.30f; }
+            Console.WriteLine(touchXY.Y);
+            return Velocity.Y;
         }
     }
-
     public class BorderLine : Entity
     {
-        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
-        {
-            this.Velocity = velocity;
-            this.Position = Position;
-            this.width = width;
-            this.height = height;
-            this.name = name;
-        }
-    }
-
-    public class MiddleLine : Entity
-    {
-        public MiddleLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name)
-        {
-            this.Velocity = velocity;
-            this.Position = Position;
-            this.width = width;
-            this.height = height;
-            this.name = name;
-        }
+        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
     }
 
     /// <summary>
