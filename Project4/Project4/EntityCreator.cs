@@ -95,7 +95,7 @@ namespace Project4
         }
 
         public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight) { }
-        public virtual void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
+        public virtual void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             Position.X = Position.X + Velocity.X * dt;
             Position.Y = Position.Y + Velocity.Y * dt;
@@ -144,7 +144,7 @@ namespace Project4
             }
             Console.WriteLine(PaddleLeft.score + "  " + PaddleRight.score);
         }
-        public override void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
+        public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
         }
@@ -157,7 +157,7 @@ namespace Project4
     public class Paddle : Entity
     {
         public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score){}
-        public override void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
+        public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
             switch (name)
@@ -167,7 +167,7 @@ namespace Project4
                     break;
                 case "PaddleRight":
                     input_manager.Touch().Visit(() => Velocity.Y = 0,
-                                                _  => MousePosition(input_manager.touchXY));
+                                                xy  => MousePosition(xy));
                     break;
             }
         }

@@ -27,12 +27,35 @@ namespace Project4
         IOption<Point> Touch();
     }
 
+    public class MonogameMouseClick : InputManager
+    {
+        public Point touchXY;
+        public int touchX, touchY;
+        public IOption<Point> Touch()
+        {
+            var mouse = Mouse.GetState();
+
+            if (mouse.LeftButton == ButtonState.Pressed)
+            {
+
+                touchX = Convert.ToInt32(mouse.Position.X);
+                touchY = Convert.ToInt32(mouse.Position.Y);
+                touchXY = new Point(touchX, touchY);
+                Console.WriteLine(touchX + "   " + touchY);
+                return new Some<Point>(touchXY);
+            }
+            return new None<Point>();
+        }
+    }
+
     /// <summary>
     /// Enables the InputManager to communicate with Monogame.
     /// </summary>
     public class MonogameTouch : InputManager
     {
+        private MonogameMouseClick monogametouch = new MonogameMouseClick();
         public Point touchXY;
+        public int touchX, touchY;
 
         public IOption<Point> Touch()
         {
@@ -45,10 +68,12 @@ namespace Project4
                     int touchX = Convert.ToInt32(touch[0].Position.X);
                     int touchY = Convert.ToInt32(touch[0].Position.Y);
                     touchXY = new Point(touchX, touchY);
+                    Console.WriteLine(touchXY);
                     return new Some<Point>(touchXY);
                 }
             }
             return new None<Point>();
+
         }
     }
 }

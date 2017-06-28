@@ -15,6 +15,8 @@ namespace Project4
         public const int ScreenWidth = 1195;
         public const int ScreenHeight = 767;
 
+        public string device = "Android";
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +29,7 @@ namespace Project4
         }
 
         EntityManager EntityManager;
-        MonogameTouch InputManager;
+        InputManager InputManager;
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
@@ -45,7 +47,10 @@ namespace Project4
             base.Initialize();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
-            InputManager = new MonogameTouch();
+            if (device == "Windows")
+                InputManager = new MonogameMouseClick();
+            else if (device == "Android")
+                InputManager = new MonogameTouch();
             IUpdateVisitor = new DefaultUpdateVisitor(InputManager, entityConstructor);
         }
 
