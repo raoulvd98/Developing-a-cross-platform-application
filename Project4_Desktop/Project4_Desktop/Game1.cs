@@ -14,20 +14,21 @@ namespace Project4
 
         public const int ScreenWidth = 1195;
         public const int ScreenHeight = 767;
+        public string device = "Windows";
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
-            graphics.IsFullScreen = true;
+            
+            graphics.IsFullScreen = false;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
         }
 
         EntityManager EntityManager;
-        MonogameTouch InputManager;
+        InputManager InputManager;
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
@@ -45,7 +46,10 @@ namespace Project4
             base.Initialize();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
-            InputManager = new MonogameTouch();
+            if (device == "Windows")
+                InputManager = new MonogameMouseClick();
+            else if (device == "Android")
+                InputManager = new MonogameTouch();
             IUpdateVisitor = new DefaultUpdateVisitor(InputManager, entityConstructor);
             this.IsMouseVisible = true;
         }

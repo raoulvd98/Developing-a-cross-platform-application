@@ -105,10 +105,10 @@ namespace Project4
     }
     public class DefaultUpdateVisitor : IUpdateVisitor
     {
-        MonogameTouch input_manager;
+        InputManager input_manager;
         EntityConstructor constructor;
 
-        public DefaultUpdateVisitor(MonogameTouch input_manager, EntityConstructor constructor)
+        public DefaultUpdateVisitor(InputManager input_manager, EntityConstructor constructor)
         {
             this.input_manager = input_manager;
             this.constructor = constructor;

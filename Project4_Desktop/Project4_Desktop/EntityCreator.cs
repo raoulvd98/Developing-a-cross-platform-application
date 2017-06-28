@@ -24,11 +24,11 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(RandomNumber(),RandomNumber()), new Vector2(560, 378), 30, 30,"Ball");
+                    return new Ball(new Vector2(0.2f,0.2f), new Vector2(560, 378), 30, 30,"Ball");
                 case "PaddleLeft":
                     return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleLeft");
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(0.977f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "Right");
+                    return new Paddle(new Vector2(0), new Vector2(0.977f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleRight");
                 case "BorderLineTop":
                     return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop");
                 case "BorderLineBottom":
@@ -87,7 +87,7 @@ namespace Project4
         }
 
         public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight) { }
-        public virtual void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
+        public virtual void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             Position.X = Position.X + Velocity.X * dt;
             Position.Y = Position.Y + Velocity.Y * dt;
@@ -128,12 +128,12 @@ namespace Project4
                 Position.X = 560;
                 Position.Y = 378;
                 Velocity = new Vector2(0,0);
-                Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
+                Velocity = new Vector2(0.2f,0.2f);
                 PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
                 PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
             }
         }
-        public override void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
+        public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
         }
@@ -141,9 +141,10 @@ namespace Project4
     public class Paddle : Entity
     {
         public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name) : base(velocity, Position, width, height, name){}
-        public override void ChangeVelocity(MonogameTouch input_manager, float dt, Entity Ball)
+        public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
+            
             switch (name)
             {
                 case "PaddleLeft":
@@ -151,13 +152,15 @@ namespace Project4
                     break;
                 case "PaddleRight":
                     input_manager.Touch().Visit(() => Velocity.Y = 0,
-                                                _  => MousePosition(input_manager.touchXY));
+                                                xy => MousePosition(xy));
                     break;
             }
         }
         public float MousePosition(Point touchXY)
         {
-            if ( touchXY.Y >= (Position.Y)) { Velocity.Y = 0.30f; }
+
+            Console.WriteLine(touchXY.Y + " + " + Position.Y);
+            if ( touchXY.Y >= (Position.Y)) {Velocity.Y = 0.30f; }
             else { Velocity.Y = -0.30f; }
             return Velocity.Y;
         }
