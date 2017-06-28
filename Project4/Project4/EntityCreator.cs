@@ -131,25 +131,16 @@ namespace Project4
         }
         public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
-            if (Position.X <= -30)
+            if (Position.X <= -30) { AddScore(PaddleRight); }
+            if (Position.X >= Game1.ScreenWidth) { AddScore(PaddleLeft); }
+            if ((Position.X <= -30) || (Position.X >= Game1.ScreenWidth))
             {
                 Position.X = 560;
                 Position.Y = 378;
                 Velocity = new Vector2(0, 0);
                 Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
                 PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
-                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
-                AddScore(PaddleRight); // PaddleRight because this paddle scores on the left side
-            }
-            if ((Position.X) >= Game1.ScreenWidth)
-            {
-                Position.X = 560;
-                Position.Y = 378;
-                Velocity = new Vector2(0, 0);
-                Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
-                PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
-                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
-                AddScore(PaddleLeft); // PaddleLeft because this paddle scores on the right side
+                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;              
             }
             Console.WriteLine(PaddleLeft.score + "  " + PaddleRight.score);
         }
