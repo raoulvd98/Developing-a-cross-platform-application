@@ -136,7 +136,6 @@ namespace Project4
                 PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
                 PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
             }
-            Console.WriteLine(PaddleLeft.score + "  " + PaddleRight.score);
         }
         public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
@@ -168,8 +167,6 @@ namespace Project4
         }
         public float MousePosition(Point touchXY)
         {
-
-            Console.WriteLine(touchXY.Y + " + " + Position.Y);
             if ( touchXY.Y >= (Position.Y)) {Velocity.Y = 0.30f; }
             else { Velocity.Y = -0.30f; }
             return Velocity.Y;
