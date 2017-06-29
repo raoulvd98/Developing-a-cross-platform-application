@@ -51,6 +51,8 @@ namespace Project4
                     return 0.2f;
                 case -1:
                     return 0.2f;
+                case 0:
+                    return 0.2f;
             }
             return RandomNumber();
         }
@@ -106,6 +108,7 @@ namespace Project4
 
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
+            //Border collision
             if ((Position.Y + 30) >= (0.948f * Game1.ScreenHeight) || (Position.Y - 30) <= (0.013f * Game1.ScreenHeight))
             {
                 float Y = Velocity.Y;
@@ -113,16 +116,18 @@ namespace Project4
                 Y = Y * -1;
                 Velocity = new Vector2(X, Y);
             }
-            
-            if (((Position.X) <= (PaddleLeft.Position.X + PaddleLeft.width) && (Position.Y + height) >= (PaddleLeft.Position.Y) && (Position.Y) <= (PaddleLeft.Position.Y + PaddleLeft.height))
-                || ((Position.X + width) >= (PaddleRight.Position.X) && (Position.Y + height) >= (PaddleRight.Position.Y) && (Position.Y) <= (PaddleRight.Position.Y + PaddleRight.height)))
+
+            //Paddle collision
+            if (((Position.X <= (PaddleLeft.Position.X + PaddleLeft.width)) && ((Position.Y + height) >= PaddleLeft.Position.Y) && (Position.Y <= (PaddleLeft.Position.Y + PaddleLeft.height)))
+                || (((Position.X + width) >= PaddleRight.Position.X) && ((Position.Y + height) >= PaddleRight.Position.Y) && (Position.Y <= (PaddleRight.Position.Y + PaddleRight.height))))
             {
-                    float Y = Velocity.Y;
-                    float X = Velocity.X;
-                    X = X * -1;
-                    Velocity = new Vector2(X, Y);
+                float Y = Velocity.Y;
+                float X = Velocity.X;
+                X = X * -1;
+                Velocity = new Vector2(X, Y);
             }
         }
+
         public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
             if (Position.X <= -30) { AddScore(PaddleRight); }
@@ -137,16 +142,19 @@ namespace Project4
                 PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
             }
         }
+
         public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
         }
+
         public override void AddScore(Entity paddle)
         {
             base.AddScore(paddle);
             paddle.score += 1;
         }
     }
+
     public class Paddle : Entity
     {
         public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
@@ -165,10 +173,12 @@ namespace Project4
                     break;
             }
         }
+
         public float MousePosition(Point touchXY)
         {
-            if ( touchXY.Y >= (Position.Y)) {Velocity.Y = 0.30f; }
-            else { Velocity.Y = -0.30f; }
+            if (touchXY.Y > (Position.Y + height)) {Velocity.Y = 0.30f; }
+            else if (touchXY.Y < Position.Y) { Velocity.Y = -0.30f; }
+            else { Velocity.Y = 0f; }
             return Velocity.Y;
         }
     }
@@ -180,12 +190,12 @@ namespace Project4
             switch (name)
             {
                 case "BorderLineTop":
-                    if ((PaddleRight.Position.Y) <= Position.Y + height) { PaddleRight.Position.Y += 9.0f; }
-                    if ((PaddleLeft.Position.Y) <= Position.Y + height) { PaddleLeft.Position.Y += 9.0f; }
+                    if ((PaddleRight.Position.Y) <= Position.Y + height) { PaddleRight.Position.Y = (Position.Y + height); }
+                    if ((PaddleLeft.Position.Y) <= Position.Y + height) { PaddleLeft.Position.Y = (Position.Y + height); }
                     break;
                 case "BorderLineBottom":
-                    if ((PaddleRight.Position.Y + PaddleRight.height) >= Position.Y) { PaddleRight.Position.Y -= 9.0f; }
-                    if ((PaddleLeft.Position.Y + PaddleLeft.height) >= Position.Y) { PaddleLeft.Position.Y -= 9.0f; }
+                    if ((PaddleRight.Position.Y + PaddleRight.height) >= Position.Y) { PaddleRight.Position.Y = (Position.Y - PaddleLeft.height); }
+                    if ((PaddleLeft.Position.Y + PaddleLeft.height) >= Position.Y) { PaddleLeft.Position.Y = (Position.Y - PaddleLeft.height); }
                     break;
             }
         }
