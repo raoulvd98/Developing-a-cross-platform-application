@@ -2,6 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using System.Data.SQLite;
+using System.Data;
+
 namespace Project4
 {
     /// <summary>
@@ -20,7 +23,7 @@ namespace Project4
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            
+
             graphics.IsFullScreen = false;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
             graphics.PreferredBackBufferWidth = ScreenWidth;
@@ -32,7 +35,7 @@ namespace Project4
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
-
+        Database DB;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -41,9 +44,11 @@ namespace Project4
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            //TODO: Add your initialization logic here
 
             base.Initialize();
+            DB = new Database();
+            DB.Data();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
             if (device == "Windows")
@@ -52,6 +57,7 @@ namespace Project4
                 InputManager = new MonogameTouch();
             IUpdateVisitor = new DefaultUpdateVisitor(InputManager, entityConstructor);
             this.IsMouseVisible = true;
+
         }
 
         /// <summary>
