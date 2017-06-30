@@ -68,7 +68,6 @@ namespace Project4
                     int touchX = Convert.ToInt32(touch[0].Position.X);
                     int touchY = Convert.ToInt32(touch[0].Position.Y);
                     touchXY = new Point(touchX, touchY);
-                    Console.WriteLine(touchXY);
                     return new Some<Point>(touchXY);
                 }
             }

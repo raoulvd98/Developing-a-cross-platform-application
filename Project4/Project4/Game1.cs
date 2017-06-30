@@ -33,7 +33,7 @@ namespace Project4
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
-
+        Database DB;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -45,6 +45,8 @@ namespace Project4
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            DB = new Database();
+            DB.Data();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
             if (device == "Windows")
