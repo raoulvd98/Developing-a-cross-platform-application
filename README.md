@@ -1,1 +1,0 @@
-# Developing-a-cross-platform-application-
