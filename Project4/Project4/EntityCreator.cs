@@ -5,6 +5,12 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
 using System.Threading;
 
 namespace Project4
@@ -24,7 +30,7 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Vector2(560, 378), 30, 30, "Ball", 0);
+                    return new Ball(new Vector2(RandomNumber(),RandomNumber()), new Vector2(560, 378), 30, 30,"Ball", 0);
                 case "PaddleLeft":
                     return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleLeft", 0);
                 case "PaddleRight":
@@ -43,13 +49,13 @@ namespace Project4
         {
             // Create a random number to determine the velocity
             Random random = new Random();
-            int number = random.Next(0, 1);
+            int number = random.Next(-1, 1);
 
             switch (number)
             {
                 case 1:
                     return 0.2f;
-                case 0:
+                case -1:
                     return 0.2f;
             }
             return RandomNumber();
@@ -102,11 +108,10 @@ namespace Project4
     }
     public class Ball : Entity
     {
-        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity,Position, width, height, name, score){}
+        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
 
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
-            //Border collision
             if ((Position.Y + 30) >= (0.948f * Game1.ScreenHeight) || (Position.Y - 30) <= (0.013f * Game1.ScreenHeight))
             {
                 float Y = Velocity.Y;
@@ -115,9 +120,8 @@ namespace Project4
                 Velocity = new Vector2(X, Y);
             }
 
-            //Paddle collision
-            if (((Position.X <= (PaddleLeft.Position.X + PaddleLeft.width)) && ((Position.Y + height) >= PaddleLeft.Position.Y) && (Position.Y <= (PaddleLeft.Position.Y + PaddleLeft.height)))
-                || (((Position.X + width) >= PaddleRight.Position.X) && ((Position.Y + height) >= PaddleRight.Position.Y) && (Position.Y <= (PaddleRight.Position.Y + PaddleRight.height))))
+            if (((Position.X) <= (PaddleLeft.Position.X + PaddleLeft.width) && (Position.Y + height) >= (PaddleLeft.Position.Y) && (Position.Y) <= (PaddleLeft.Position.Y + PaddleLeft.height))
+                || ((Position.X + width) >= (PaddleRight.Position.X) && (Position.Y + height) >= (PaddleRight.Position.Y) && (Position.Y) <= (PaddleRight.Position.Y + PaddleRight.height)))
             {
                 float Y = Velocity.Y;
                 float X = Velocity.X;
@@ -125,7 +129,6 @@ namespace Project4
                 Velocity = new Vector2(X, Y);
             }
         }
-
         public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
             if (Position.X <= -30) { AddScore(PaddleRight); }
@@ -137,29 +140,26 @@ namespace Project4
                 Velocity = new Vector2(0, 0);
                 Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
                 PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
-                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
+                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;              
             }
+            Console.WriteLine(PaddleLeft.score + "  " + PaddleRight.score);
         }
-
         public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
         }
-
         public override void AddScore(Entity paddle)
         {
             base.AddScore(paddle);
             paddle.score += 1;
         }
     }
-
     public class Paddle : Entity
     {
-        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
+        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score){}
         public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
-            
             switch (name)
             {
                 case "PaddleLeft":
@@ -167,37 +167,36 @@ namespace Project4
                     break;
                 case "PaddleRight":
                     input_manager.Touch().Visit(() => Velocity.Y = 0,
-                                                xy => MousePosition(xy));
+                                                xy  => MousePosition(xy));
                     break;
             }
         }
-
         public float MousePosition(Point touchXY)
         {
-            if (touchXY.Y > (Position.Y + height)) {Velocity.Y = 0.30f; }
-            else if (touchXY.Y < Position.Y) { Velocity.Y = -0.30f; }
-            else { Velocity.Y = 0f; }
+            if ( touchXY.Y >= (Position.Y)) { Velocity.Y = 0.30f; }
+            else { Velocity.Y = -0.30f; }
             return Velocity.Y;
         }
     }
     public class BorderLine : Entity
     {
-        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
+        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score){}
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
             switch (name)
             {
                 case "BorderLineTop":
-                    if ((PaddleRight.Position.Y) <= Position.Y + height) { PaddleRight.Position.Y = (Position.Y + height); }
-                    if ((PaddleLeft.Position.Y) <= Position.Y + height) { PaddleLeft.Position.Y = (Position.Y + height); }
+                    if ((PaddleRight.Position.Y) <= Position.Y + height) { PaddleRight.Position.Y += 9.0f; }
+                    if ((PaddleLeft.Position.Y) <= Position.Y + height) { PaddleLeft.Position.Y += 9.0f; }
                     break;
                 case "BorderLineBottom":
-                    if ((PaddleRight.Position.Y + PaddleRight.height) >= Position.Y) { PaddleRight.Position.Y = (Position.Y - PaddleLeft.height); }
-                    if ((PaddleLeft.Position.Y + PaddleLeft.height) >= Position.Y) { PaddleLeft.Position.Y = (Position.Y - PaddleLeft.height); }
+                    if ((PaddleRight.Position.Y + PaddleRight.height) >= Position.Y) { PaddleRight.Position.Y -= 9.0f; }
+                    if ((PaddleLeft.Position.Y + PaddleLeft.height) >= Position.Y) { PaddleLeft.Position.Y -= 9.0f; }
                     break;
             }
         }
     }
+
 
     /// <summary>
     /// Allows visitor to visit entities.
@@ -225,7 +224,6 @@ namespace Project4
         public Entity Ball;
         public Entity PaddleLeft;
         public Entity PaddleRight;
-
         public EntityManager Instantiate(string option, Action exit)
         {
             EntityManager entityManager = new EntityManager();
@@ -248,7 +246,6 @@ namespace Project4
                         entityManager.entities.Add(BorderLineTop);
                         entityManager.entities.Add(BorderLineBottom);
                         entityManager.entities.Add(MiddleLine);
-
                         break;
                     }
             }
