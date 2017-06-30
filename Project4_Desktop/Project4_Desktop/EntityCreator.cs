@@ -78,28 +78,23 @@ namespace Project4
             this.score = score;
         }
 
-        public void Draw(IDrawVisitor visitor)
-        {
-            visitor.DrawEntity(this);
-        }
+        public void Draw(IDrawVisitor visitor) { visitor.DrawEntity(this); }
 
-        public void Update(IUpdateVisitor visitor, float dt)
-        {
-            visitor.UpdateEntity(this, dt);
-        }
+        public void Update(IUpdateVisitor visitor, float dt) { visitor.UpdateEntity(this, dt); }
 
         public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight) { }
+
         public virtual void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             Position.X = Position.X + Velocity.X * dt;
             Position.Y = Position.Y + Velocity.Y * dt;
         }
-        public virtual void AddScore(Entity paddle) { }
-        public virtual void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
-        {
 
-        }
+        public virtual void AddScore(Entity paddle) { }
+
+        public virtual void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight) { }
     }
+
     public class Ball : Entity
     {
         public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity,Position, width, height, name, score){}
