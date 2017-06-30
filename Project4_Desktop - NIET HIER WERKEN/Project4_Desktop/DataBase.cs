@@ -12,12 +12,12 @@ namespace Project4
         public string sql;
         public void Data()
         {
-            //SQLiteConnection.CreateFile("HotPinkPong.sqlite");
-            //sql = "create table WinsLosses (ID INTEGER PRIMARY KEY, Wins INTEGER, Losses INTEGER)";
-            //DataBaseQueryExcecute(sql);
+            SQLiteConnection.CreateFile("HotPinkPong.sqlite");
+            sql = "create table WinsLosses (ID INTEGER PRIMARY KEY, Wins INTEGER, Losses INTEGER)";
+            DataBaseQueryExcecute(sql);
 
-            //sql = "insert into WinsLosses (ID, Wins, Losses) values (1,0,0)";
-            //DataBaseQueryExcecute(sql);
+            sql = "insert into WinsLosses (ID, Wins, Losses) values (1,0,0)";
+            DataBaseQueryExcecute(sql);
 
             sql = "select * from WinsLosses";
             DataBaseQueryRead(sql);
