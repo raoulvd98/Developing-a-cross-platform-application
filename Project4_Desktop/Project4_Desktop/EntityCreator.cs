@@ -43,13 +43,11 @@ namespace Project4
         {
             // Create a random number to determine the velocity
             Random random = new Random();
-            int number = random.Next(-1, 1);
+            int number = random.Next(0, 1);
 
             switch (number)
             {
                 case 1:
-                    return 0.2f;
-                case -1:
                     return 0.2f;
                 case 0:
                     return 0.2f;
