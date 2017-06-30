@@ -33,7 +33,6 @@ namespace Project4
                 touchX = Convert.ToInt32(mouse.Position.X);
                 touchY = Convert.ToInt32(mouse.Position.Y);
                 touchXY = new Point(touchX, touchY);
-                Console.WriteLine(touchX + "   " + touchY);
                 return new Some<Point>(touchXY);
             }
             return new None<Point>();
