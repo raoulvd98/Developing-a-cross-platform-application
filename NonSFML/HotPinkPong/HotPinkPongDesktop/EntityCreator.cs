@@ -198,27 +198,6 @@ namespace Project4
             }
         }
     }
-    //public class Score : Entity
-    //{
-    //    int score_left = 0;
-    //    int score_right = 0;
-    //    public Score(Vector2 velocity, Vector2 Position, float width, float height, string name, int score, string sprite_name) : base(velocity, Position, width, height, name, score, sprite_name)
-    //    {
-            
-    //    }
-    //    public override void AddScore(Entity paddle)
-    //    {
-    //        base.AddScore(paddle);
-    //        paddle.score += 1;
-    //        if (paddle.name == "PaddleRight") { score_right += 1; }
-    //        else if (paddle.name == "PaddleLeft") { score_left += 1; }
-    //    }
-    //    public override void ChangeScoreSprite(Entity ScoreLeft, Entity ScoreRight)
-    //    {
-
-    //    }
-
-    //}
 
     public class LeftScore : Entity
     {
