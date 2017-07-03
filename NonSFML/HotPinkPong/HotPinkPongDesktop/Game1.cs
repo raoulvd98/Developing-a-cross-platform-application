@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Input;
 namespace Project4
 {
     /// <summary>
-    /// This is the main type for your game.
+    /// This is the main type of our game.
     /// </summary>
     public class Game1 : Game
     {
@@ -32,6 +32,7 @@ namespace Project4
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -40,8 +41,6 @@ namespace Project4
         /// </summary>
         protected override void Initialize()
         {
-            //TODO: Add your initialization logic here
-
             base.Initialize();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
@@ -60,21 +59,9 @@ namespace Project4
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             IDrawingManager = new MonogameDrawingAdapter(spriteBatch, Content);
             IDrawVisitor = new DefaultDrawVisitor(IDrawingManager);
-
-            // TODO: use this.Content to load your game content here
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -88,7 +75,6 @@ namespace Project4
                 Exit();
 
             EntityManager.Update(IUpdateVisitor, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -103,8 +89,6 @@ namespace Project4
             spriteBatch.Begin();
             EntityManager.Draw(IDrawVisitor);
             spriteBatch.End();
-
-            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }
