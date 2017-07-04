@@ -34,7 +34,9 @@ namespace SFMLLogic
             InputManager = new MouseClick();
             IUpdateVisitor = new DefaultUpdateVisitor(InputManager, entityConstructor);
 
-            
+
+            IDrawingManager = new SFMLDrawingAdapter(window);
+            IDrawVisitor = new DefaultDrawVisitor(IDrawingManager);
 
             window.SetActive();
             while (window.IsOpen)
@@ -48,18 +50,13 @@ namespace SFMLLogic
         }
 
         public void Draw()
-        {
-            
-            IDrawingManager = new SFMLDrawingAdapter(window);
-            IDrawVisitor = new DefaultDrawVisitor(IDrawingManager);
+        {      
             EntityManager.Draw(IDrawVisitor);
-         
-
         }
 
         public void Update()
         {
-            EntityManager.Update(IUpdateVisitor, 100);
+            EntityManager.Update(IUpdateVisitor, 4);
         }
     }
 } 
