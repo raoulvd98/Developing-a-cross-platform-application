@@ -49,6 +49,7 @@ namespace SharedLogic
             this.X = xy;
             this.Y = xy;
         }
+
     }
     
 }

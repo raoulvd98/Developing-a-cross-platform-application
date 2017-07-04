@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Diagnostics;
 
 using System.Threading;
 
@@ -208,6 +209,7 @@ namespace Project4
 
         public void Draw(IDrawVisitor visitor)
         {
+            Debug.WriteLine(this);
             visitor.DrawScreen(this);
         }
 

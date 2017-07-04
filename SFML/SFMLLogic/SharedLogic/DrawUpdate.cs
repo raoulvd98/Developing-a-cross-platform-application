@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace SharedLogic
 {
@@ -40,38 +41,7 @@ namespace SharedLogic
     /// <summary>
     /// Concrete implementations for drawing entities on the screen.
     /// </summary>
-    public class MonogameDrawingAdapter : IDrawingManager
-    {
-        SpriteBatch sprite_batch;
-        ContentManager content_manager;
 
-        Texture2D white_pixel;
-
-        public MonogameDrawingAdapter(SpriteBatch sprite_batch, ContentManager content_manager)
-        {
-            this.sprite_batch = sprite_batch;
-            this.content_manager = content_manager;
-            white_pixel = content_manager.Load<Texture2D>("white_pixel");
-        }
-
-        private Microsoft.Xna.Framework.Color Convert_color(Colour color)
-        {
-            switch (color)
-            {
-                case Colour.White:
-                    return Microsoft.Xna.Framework.Color.White;
-                case Colour.Hotpink:
-                    return Microsoft.Xna.Framework.Color.HotPink;
-                default:
-                    return Microsoft.Xna.Framework.Color.White;
-            }
-        }
-
-        public void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color)
-        {
-            sprite_batch.Draw(white_pixel, new Rectangle((int)top_left_coordinate.X, (int)top_left_coordinate.Y, (int)width, (int)height), Convert_color(color));
-        }
-    }
 
     /// <summary>
     /// Concrete implementation for visiting the list and drawing.

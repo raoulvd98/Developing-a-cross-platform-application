@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace SharedLogic
 
@@ -25,15 +26,15 @@ namespace SharedLogic
                 case "Ball":
                     return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Vector2(560, 378), 30, 30, "Ball", 0);
                 case "PaddleLeft":
-                    return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleLeft", 0);
+                    return new Paddle(new Vector2(0), new Vector2(0, 333.65f), 29.88f, 99.71f, "PaddleLeft", 0);
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(0.961f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleRight", 0);
+                    return new Paddle(new Vector2(0), new Vector2(1148.40f, 333.65f), 29.88f, 99.71f, "PaddleRight", 0);
                 case "BorderLineTop":
-                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop", 0);
+                    return new BorderLine(new Vector2(0), new Vector2(29.88f, 9.97f), 1135.25f, 29.91f, "BorderLineTop", 0);
                 case "BorderLineBottom":
-                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineBottom", 0);
+                    return new BorderLine(new Vector2(0), new Vector2(29.88f, 727.12f), 1135.25f, 29.91f, "BorderLineBottom", 0);
                 case "MiddleLine":
-                    return new BorderLine(new Vector2(0), new Vector2(0.496f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.004f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight, "MiddleLine", 0);
+                    return new BorderLine(new Vector2(0), new Vector2(592.72f, 9.97f), 4.78f, 727.12f, "MiddleLine", 0);
             }
             throw new Exception("Entity creation failed");
         }
@@ -106,7 +107,7 @@ namespace SharedLogic
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
             //Border collision
-            if ((Position.Y + 30) >= (0.948f * Game1.ScreenHeight) || (Position.Y - 30) <= (0.013f * Game1.ScreenHeight))
+            if ((Position.Y + 30) >= (727.12f) || (Position.Y - 30) <= (9.97f))
             {
                 float Y = Velocity.Y;
                 float X = Velocity.X;
@@ -128,15 +129,15 @@ namespace SharedLogic
         public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
             if (Position.X <= -30) { AddScore(PaddleRight); }
-            if (Position.X >= Game1.ScreenWidth) { AddScore(PaddleLeft); }
-            if ((Position.X <= -30) || (Position.X >= Game1.ScreenWidth))
+            if (Position.X >= 1195f) { AddScore(PaddleLeft); }
+            if ((Position.X <= -30) || (Position.X >= 1195))
             {
                 Position.X = 560;
                 Position.Y = 378;
                 Velocity = new Vector2(0, 0);
                 Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
-                PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
-                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
+                PaddleLeft.Position.Y = 333.65f;
+                PaddleRight.Position.Y = 333.65f;
             }
         }
 
@@ -165,7 +166,7 @@ namespace SharedLogic
                     Velocity.Y = Ball.Velocity.Y * 1f;
                     break;
                 case "PaddleRight":
-                    input_manager.Touch().Visit(() => Velocity.Y = 0,
+                    input_manager.Click().Visit(() => Velocity.Y = 0,
                                                 xy => MousePosition(xy));
                     break;
             }
@@ -207,6 +208,7 @@ namespace SharedLogic
 
         public void Draw(IDrawVisitor visitor)
         {
+            Debug.WriteLine(this);
             visitor.DrawScreen(this);
         }
 

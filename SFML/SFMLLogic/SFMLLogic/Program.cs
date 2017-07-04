@@ -4,15 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SFML.System;
+using SFML.Graphics;
+using SFML.Audio;
+using SFML.Window;
+
+using SharedLogic;
+
 namespace SFMLLogic
-{
+{ 
     class Program
     {
         static void Main(string[] args)
         {
-            using (var game = new Game1())
-                game.Run();
+            var game = new Game();
+            game.Run();
         }
     }
-    }
+    
 }
