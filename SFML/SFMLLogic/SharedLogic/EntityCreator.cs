@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Diagnostics;
 
-using System.Threading;
+namespace SharedLogic
 
-namespace Project4
 {
     /// <summary>
     /// Factory to allow for the creation of entities.
@@ -25,21 +24,17 @@ namespace Project4
             switch (Entityname)
             {
                 case "Ball":
-                    return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Vector2(560, 378), 30, 30, "Ball", 0, "white_pixel");
+                    return new Ball(new Vector2(RandomNumber(), RandomNumber()), new Vector2(560, 378), 30, 30, "Ball", 0);
                 case "PaddleLeft":
-                    return new Paddle(new Vector2(0), new Vector2(0, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleLeft", 0, "white_pixel");
+                    return new Paddle(new Vector2(0), new Vector2(0, 333.65f), 29.88f, 99.71f, "PaddleLeft", 0);
                 case "PaddleRight":
-                    return new Paddle(new Vector2(0), new Vector2(0.961f * Game1.ScreenWidth, 0.435f * Game1.ScreenHeight), 0.025f * Game1.ScreenWidth, 0.130f * Game1.ScreenHeight, "PaddleRight", 0, "white_pixel");
+                    return new Paddle(new Vector2(0), new Vector2(1148.40f, 333.65f), 29.88f, 99.71f, "PaddleRight", 0);
                 case "BorderLineTop":
-                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineTop", 0, "white_pixel");
+                    return new BorderLine(new Vector2(0), new Vector2(29.88f, 9.97f), 1135.25f, 29.91f, "BorderLineTop", 0);
                 case "BorderLineBottom":
-                    return new BorderLine(new Vector2(0), new Vector2(0.025f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight), 0.950f * Game1.ScreenWidth, 0.039f * Game1.ScreenHeight, "BorderLineBottom", 0, "white_pixel");
+                    return new BorderLine(new Vector2(0), new Vector2(29.88f, 727.12f), 1135.25f, 29.91f, "BorderLineBottom", 0);
                 case "MiddleLine":
-                    return new BorderLine(new Vector2(0), new Vector2(0.496f * Game1.ScreenWidth, 0.013f * Game1.ScreenHeight), 0.004f * Game1.ScreenWidth, 0.948f * Game1.ScreenHeight, "MiddleLine", 0, "white_pixel");
-                case "ScoreLeft":
-                    return new LeftScore(new Vector2(0), new Vector2(0.450f * Game1.ScreenWidth, 0.060f * Game1.ScreenHeight), 0.040f * Game1.ScreenWidth, 0.1f * Game1.ScreenHeight, "Score", 0, "number_0");
-                case "ScoreRight":
-                    return new RightScore(new Vector2(0), new Vector2(0.506f * Game1.ScreenWidth, 0.060f * Game1.ScreenHeight), 0.040f * Game1.ScreenWidth, 0.1f * Game1.ScreenHeight, "Score", 0, "number_0");
+                    return new BorderLine(new Vector2(0), new Vector2(592.72f, 9.97f), 4.78f, 727.12f, "MiddleLine", 0);
             }
             throw new Exception("Entity creation failed");
         }
@@ -72,9 +67,8 @@ namespace Project4
         public float height;
         public string name;
         public int score;
-        public string sprite_name;
 
-        public Entity(Vector2 velocity, Vector2 Position, float width, float height, string name, int score, string sprite_name)
+        public Entity(Vector2 velocity, Vector2 Position, float width, float height, string name, int score)
         {
             this.Velocity = velocity;
             this.Position = Position;
@@ -82,7 +76,6 @@ namespace Project4
             this.height = height;
             this.name = name;
             this.score = score;
-            this.sprite_name = sprite_name;
         }
 
         public void Draw(IDrawVisitor visitor)
@@ -96,24 +89,25 @@ namespace Project4
         }
 
         public virtual void Checkcollision(Entity PaddleLeft, Entity PaddleRight) { }
-        
         public virtual void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             Position.X = Position.X + Velocity.X * dt;
             Position.Y = Position.Y + Velocity.Y * dt;
         }
-        public virtual void AddScore() { }
-        public virtual void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight, Entity LeftScore, Entity Rightscore) { }
-        public virtual void Change_SpriteName() { }
+        public virtual void AddScore(Entity paddle) { }
+        public virtual void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
+        {
+
+        }
     }
     public class Ball : Entity
     {
-        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name, int score, string sprite_name) : base(velocity, Position, width, height, name, score, sprite_name) { }
+        public Ball(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
 
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
             //Border collision
-            if ((Position.Y + 30) >= (0.948f * Game1.ScreenHeight) || (Position.Y - 30) <= (0.013f * Game1.ScreenHeight))
+            if ((Position.Y + 30) >= (727.12f) || (Position.Y - 30) <= (9.97f))
             {
                 float Y = Velocity.Y;
                 float X = Velocity.X;
@@ -131,19 +125,19 @@ namespace Project4
                 Velocity = new Vector2(X, Y);
             }
         }
-            
-        public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight, Entity LeftScore, Entity Rightscore)
+
+        public override void CheckOutOfBounds(Entity PaddleLeft, Entity PaddleRight)
         {
-            if (Position.X <= -30) { Rightscore.AddScore();  }
-            if (Position.X >= Game1.ScreenWidth) { LeftScore.AddScore(); }
-            if ((Position.X <= -30) || (Position.X >= Game1.ScreenWidth))
+            if (Position.X <= -30) { AddScore(PaddleRight); }
+            if (Position.X >= 1195f) { AddScore(PaddleLeft); }
+            if ((Position.X <= -30) || (Position.X >= 1195))
             {
                 Position.X = 560;
                 Position.Y = 378;
                 Velocity = new Vector2(0, 0);
                 Velocity = new Vector2(EntityFactory.RandomNumber(), EntityFactory.RandomNumber());
-                PaddleLeft.Position.Y = 0.435f * Game1.ScreenHeight;
-                PaddleRight.Position.Y = 0.435f * Game1.ScreenHeight;
+                PaddleLeft.Position.Y = 333.65f;
+                PaddleRight.Position.Y = 333.65f;
             }
         }
 
@@ -152,11 +146,16 @@ namespace Project4
             base.ChangeVelocity(input_manager, dt, Ball);
         }
 
-
+        public override void AddScore(Entity paddle)
+        {
+            base.AddScore(paddle);
+            paddle.score += 1;
+        }
     }
+
     public class Paddle : Entity
     {
-        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name, int score, string sprite_name) : base(velocity, Position, width, height, name, score, sprite_name) { }
+        public Paddle(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
         public override void ChangeVelocity(InputManager input_manager, float dt, Entity Ball)
         {
             base.ChangeVelocity(input_manager, dt, Ball);
@@ -164,10 +163,10 @@ namespace Project4
             switch (name)
             {
                 case "PaddleLeft":
-                    Velocity.Y = Ball.Velocity.Y * 0.85f;
+                    Velocity.Y = Ball.Velocity.Y * 1f;
                     break;
                 case "PaddleRight":
-                    input_manager.Touch().Visit(() => Velocity.Y = 0,
+                    input_manager.Click().Visit(() => Velocity.Y = 0,
                                                 xy => MousePosition(xy));
                     break;
             }
@@ -183,7 +182,7 @@ namespace Project4
     }
     public class BorderLine : Entity
     {
-        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name, int score, string sprite_name) : base(velocity, Position, width, height, name, score, sprite_name) { }
+        public BorderLine(Vector2 velocity, Vector2 Position, float width, float height, string name, int score) : base(velocity, Position, width, height, name, score) { }
         public override void Checkcollision(Entity PaddleLeft, Entity PaddleRight)
         {
             switch (name)
@@ -200,70 +199,6 @@ namespace Project4
         }
     }
 
-    public class LeftScore : Entity
-    {
-        public LeftScore(Vector2 velocity, Vector2 Position, float width, float height, string name, int score, string sprite_name) : base(velocity, Position, width, height, name, score, sprite_name) { }
-
-        public override void AddScore()
-        {
-            score += 1;
-            Change_SpriteName();
-        }
-        public override void Change_SpriteName()
-        {
-            base.Change_SpriteName();
-            switch (score)
-            {
-                case 1:
-                    sprite_name = "number_1";
-                    break;
-                case 2:
-                    sprite_name = "number_2";
-                    break;
-                case 3:
-                    sprite_name = "number_3";
-                    break;
-                case 4:
-                    sprite_name = "number_4";
-                    break;
-                case 5:
-                    sprite_name = "number_5";
-                    break;
-            }
-        }
-    }
-    public class RightScore : Entity
-    {
-        public RightScore(Vector2 velocity, Vector2 Position, float width, float height, string name, int score, string sprite_name) : base(velocity, Position, width, height, name, score, sprite_name) { }
-        public override void AddScore()
-        {
-            score += 1;
-            Change_SpriteName();
-        }
-        public override void Change_SpriteName()
-        {
-            base.Change_SpriteName();
-            switch (score)
-            {
-                case 1:
-                    sprite_name = "number_1";
-                    break;
-                case 2:
-                    sprite_name = "number_2";
-                    break;
-                case 3:
-                    sprite_name = "number_3";
-                    break;
-                case 4:
-                    sprite_name = "number_4";
-                    break;
-                case 5:
-                    sprite_name = "number_5";
-                    break;
-            }
-        }
-    }
-    
     /// <summary>
     /// Allows visitor to visit entities.
     /// </summary>
@@ -291,8 +226,6 @@ namespace Project4
         public Entity Ball;
         public Entity PaddleLeft;
         public Entity PaddleRight;
-        public Entity ScoreLeft;
-        public Entity ScoreRight;
 
         public EntityManager Instantiate(string option, Action exit)
         {
@@ -308,8 +241,6 @@ namespace Project4
                         Entity BorderLineTop = entityCreator.Create("BorderLineTop");
                         Entity BorderLineBottom = entityCreator.Create("BorderLineBottom");
                         Entity MiddleLine = entityCreator.Create("MiddleLine");
-                        ScoreLeft = entityCreator.Create("ScoreLeft");
-                        ScoreRight = entityCreator.Create("ScoreRight");
 
                         entityManager.entities = new List<Entity>();
                         entityManager.entities.Add(Ball);
@@ -318,8 +249,6 @@ namespace Project4
                         entityManager.entities.Add(BorderLineTop);
                         entityManager.entities.Add(BorderLineBottom);
                         entityManager.entities.Add(MiddleLine);
-                        entityManager.entities.Add(ScoreLeft);
-                        entityManager.entities.Add(ScoreRight);
 
                         break;
                     }
