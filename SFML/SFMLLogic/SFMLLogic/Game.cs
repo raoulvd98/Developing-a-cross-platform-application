@@ -24,7 +24,6 @@ namespace SFMLLogic
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
-        SFMLDrawingAdapter hallo;
 
         public void Run()
         {
@@ -60,7 +59,7 @@ namespace SFMLLogic
 
         public void Update()
         {
-            EntityManager.Update(IUpdateVisitor, 4);
+            EntityManager.Update(IUpdateVisitor, 100);
         }
     }
 } 

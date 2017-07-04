@@ -1,11 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Project4
+using SharedLogic;
+
+namespace MonoGameLogic
 {
     /// <summary>
-    /// This is the main type of our game.
+    /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game
     {
@@ -14,14 +16,15 @@ namespace Project4
 
         public const int ScreenWidth = 1195;
         public const int ScreenHeight = 767;
-        public string device = "Windows";
+
+        public string device = "Android";
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.IsFullScreen = false;
+            graphics.IsFullScreen = true;
             graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight;
             graphics.PreferredBackBufferWidth = ScreenWidth;
             graphics.PreferredBackBufferHeight = ScreenHeight;
@@ -32,7 +35,7 @@ namespace Project4
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
-
+        //Database DB;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -41,7 +44,11 @@ namespace Project4
         /// </summary>
         protected override void Initialize()
         {
+            // TODO: Add your initialization logic here
+
             base.Initialize();
+            //DB = new Database();
+            //DB.Data();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
             if (device == "Windows")
@@ -49,8 +56,6 @@ namespace Project4
             else if (device == "Android")
                 InputManager = new MonogameTouch();
             IUpdateVisitor = new DefaultUpdateVisitor(InputManager, entityConstructor);
-            this.IsMouseVisible = true;
-
         }
 
         /// <summary>
@@ -59,9 +64,21 @@ namespace Project4
         /// </summary>
         protected override void LoadContent()
         {
+            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             IDrawingManager = new MonogameDrawingAdapter(spriteBatch, Content);
             IDrawVisitor = new DefaultDrawVisitor(IDrawingManager);
+
+            // TODO: use this.Content to load your game content here
+        }
+
+        /// <summary>
+        /// UnloadContent will be called once per game and is the place to unload
+        /// game-specific content.
+        /// </summary>
+        protected override void UnloadContent()
+        {
+            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -75,6 +92,7 @@ namespace Project4
                 Exit();
 
             EntityManager.Update(IUpdateVisitor, (float)gameTime.ElapsedGameTime.TotalMilliseconds);
+            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -89,6 +107,8 @@ namespace Project4
             spriteBatch.Begin();
             EntityManager.Draw(IDrawVisitor);
             spriteBatch.End();
+
+            // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }

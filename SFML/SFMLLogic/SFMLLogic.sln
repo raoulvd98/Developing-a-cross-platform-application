@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFMLLogic", "SFMLLogic\SFML
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLogic", "SharedLogic\SharedLogic.csproj", "{DAAAEDC1-34AE-497A-8909-7B8B2AD265DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameLogic", "MonoGameLogic\MonoGameLogic.csproj", "{AE48EFEE-6BED-425D-86C6-76ECC89AD17D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,12 @@ Global
 		{DAAAEDC1-34AE-497A-8909-7B8B2AD265DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DAAAEDC1-34AE-497A-8909-7B8B2AD265DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DAAAEDC1-34AE-497A-8909-7B8B2AD265DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE48EFEE-6BED-425D-86C6-76ECC89AD17D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE48EFEE-6BED-425D-86C6-76ECC89AD17D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE48EFEE-6BED-425D-86C6-76ECC89AD17D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{AE48EFEE-6BED-425D-86C6-76ECC89AD17D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE48EFEE-6BED-425D-86C6-76ECC89AD17D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE48EFEE-6BED-425D-86C6-76ECC89AD17D}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
