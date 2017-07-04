@@ -18,7 +18,7 @@ namespace SharedLogic
     /// </summary>
     public interface IDrawingManager
     {
-        void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color);
+        void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color, string sprite_name);
     }
     public interface IDrawable { void Draw(IDrawVisitor visitor); }
     public interface IDrawVisitor
@@ -57,7 +57,7 @@ namespace SharedLogic
 
         public void DrawEntity(Entity entity)
         {
-            drawing_manager.DrawRectangle(new Point(Convert.ToInt32(entity.Position.X), Convert.ToInt32(entity.Position.Y)), entity.width, entity.height, Colour.Hotpink);
+            drawing_manager.DrawRectangle(new Point(Convert.ToInt32(entity.Position.X), Convert.ToInt32(entity.Position.Y)), entity.width, entity.height, Colour.Hotpink, entity.sprite_name);
         }
 
         public void DrawScreen(EntityManager entityManager)
@@ -84,7 +84,7 @@ namespace SharedLogic
         {
             entity.Checkcollision(constructor.PaddleLeft, constructor.PaddleRight);
             entity.ChangeVelocity(input_manager, dt, constructor.Ball);
-            entity.CheckOutOfBounds(constructor.PaddleLeft, constructor.PaddleRight);
+            entity.CheckOutOfBounds(constructor.PaddleLeft, constructor.PaddleRight, constructor.ScoreLeft, constructor.ScoreRight);
         }
 
         public void UpdateScreen(EntityManager entityManager, float dt)
