@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SharedLogic
 {
+    /// <summary>
+    /// Custom Point, Rectangle and Vector class for usage in both logics.
+    /// </summary>
     public class Point
     {
         public int X { get; set; }
