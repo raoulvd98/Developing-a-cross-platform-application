@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using SFML.System;
@@ -21,7 +22,6 @@ namespace SFMLLogic
         RenderWindow window;
         Sprite sprite = new Sprite();
         Texture pixel = new Texture("white_pixel.png");
-
 
         public SFMLDrawingAdapter(RenderWindow window)
         {
@@ -92,11 +92,23 @@ namespace SFMLLogic
                     sprite.Color = Color.Magenta;
                     this.window.Draw(sprite);
                     sprite.Rotation = 0;
+
+                    Reset();
                     break;
                 default:
 
                     throw new Exception(name);
             }
         }
+        public void Reset()
+        {
+            //Database.ExecuteData("UPDATE WinsLosses SET Losses = Losses + 1 WHERE ID = 1");
+            this.window.Close();
+            var game = new Game();
+            game.Run();
+        }
+
     }
+
+
 }

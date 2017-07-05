@@ -39,7 +39,6 @@ namespace MonoGameLogic
                 touchX = Convert.ToInt32(mouse.Position.X);
                 touchY = Convert.ToInt32(mouse.Position.Y);
                 touchXY = new SharedLogic.Point(touchX, touchY);
-                Console.WriteLine(touchX + "   " + touchY);
                 return new Some<SharedLogic.Point>(touchXY);
             }
             return new None<SharedLogic.Point>();

@@ -20,6 +20,5 @@ namespace SFMLLogic
             var game = new Game();
             game.Run();
         }
-    }
-    
+    }    
 }

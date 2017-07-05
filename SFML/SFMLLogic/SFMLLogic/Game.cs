@@ -40,8 +40,14 @@ namespace SFMLLogic
 
             IDrawingManager = new SFMLDrawingAdapter(window);
             IDrawVisitor = new DefaultDrawVisitor(IDrawingManager);
+            
+            //Database.Set_connection();
+            //Database.ExecuteData("create table if exists WinsLosses (ID INTEGER PRIMARY KEY, Wins INTEGER, Losses INTEGER)");
+            //Database.ExecuteData("insert into WinsLosses (ID, Wins, Losses) values (1,0,0)");
+            //Database.ReadData("select * from WinsLosses");
 
             window.SetActive();
+
             while (window.IsOpen)
             {
                 window.Clear();
@@ -53,7 +59,7 @@ namespace SFMLLogic
         }
 
         public void Draw()
-        {      
+        {
             EntityManager.Draw(IDrawVisitor);
         }
 
@@ -62,4 +68,4 @@ namespace SFMLLogic
             EntityManager.Update(IUpdateVisitor, 4);
         }
     }
-} 
+}
