@@ -272,7 +272,6 @@ namespace SharedLogic
 
         public void Draw(IDrawVisitor visitor)
         {
-            Debug.WriteLine(this);
             visitor.DrawScreen(this);
         }
 
