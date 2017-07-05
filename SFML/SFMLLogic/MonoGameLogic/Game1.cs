@@ -35,7 +35,7 @@ namespace MonoGameLogic
         IDrawingManager IDrawingManager;
         IDrawVisitor IDrawVisitor;
         IUpdateVisitor IUpdateVisitor;
-        Database DB;
+        //Database DB;
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -47,8 +47,8 @@ namespace MonoGameLogic
             // TODO: Add your initialization logic here
 
             base.Initialize();
-            DB = new Database();
-            DB.ExecuteData();
+            //DB = new Database();
+            //DB.ExecuteData();
             EntityConstructor entityConstructor = new EntityConstructor();
             EntityManager = entityConstructor.Instantiate("1", () => Exit());
             if (device == "Windows")
