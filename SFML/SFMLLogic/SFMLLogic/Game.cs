@@ -65,7 +65,7 @@ namespace SFMLLogic
 
         public void Update()
         {
-            EntityManager.Update(IUpdateVisitor, 4);
+            EntityManager.Update(IUpdateVisitor, 1);
         }
     }
 }
