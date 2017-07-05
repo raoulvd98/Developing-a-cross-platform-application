@@ -16,7 +16,7 @@ using SFML.Window;
 namespace SFMLLogic
 {
     /// <summary>
-    /// The InputManager registers if the screen is touched.
+    /// Registers if the screen is clicked and where on the screen this is done.
     /// </summary>
 
 

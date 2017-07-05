@@ -22,7 +22,7 @@ using SharedLogic;
 namespace MonoGameLogic
 {
     /// <summary>
-    /// The InputManager registers if the screen is touched.
+    /// Registers if the screen is touched and where this is done.
     /// </summary>
 
     public class MonogameMouseClick : InputManager

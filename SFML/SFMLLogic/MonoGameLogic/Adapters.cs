@@ -19,6 +19,9 @@ using SharedLogic;
 
 namespace MonoGameLogic
 {
+    /// <summary>
+    /// Draw entities in the logic of SFML.
+    /// </summary>
     public class MonogameDrawingAdapter : IDrawingManager
     {
         SpriteBatch sprite_batch;

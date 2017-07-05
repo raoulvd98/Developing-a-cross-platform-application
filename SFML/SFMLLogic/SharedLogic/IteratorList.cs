@@ -17,6 +17,7 @@ namespace SharedLogic
         void Reset();
     }
 
+
     public class List<T> : Iterator<T>
     {
         private int size;

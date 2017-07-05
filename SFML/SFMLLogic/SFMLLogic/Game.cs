@@ -13,6 +13,9 @@ using SharedLogic;
 
 namespace SFMLLogic
 {
+    /// <summary>
+    /// Run the SFMLLogic, drawing and updating the game.
+    /// </summary>
     class Game
     {
         RenderWindow window = new RenderWindow(new VideoMode(1195, 767), "test");

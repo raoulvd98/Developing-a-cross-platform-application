@@ -13,23 +13,9 @@ using SharedLogic;
 
 namespace SFMLLogic
 {
-    public struct Vector2
-    {
-        float x, y;
-        Vector2f vector2;
-
-        public Vector2(float x, float y)
-        {
-            this.x = x;
-            this.y = y;
-            this.vector2 = new Vector2f(x, y);
-        }
-
-        public static implicit operator Vector2f(Vector2 v)
-        {
-            return new Vector2f(v.x, v.y);
-        }
-    }
+    /// <summary>
+    /// Draw entities in the logic of SFML.
+    /// </summary>
     public class SFMLDrawingAdapter : IDrawingManager
     {
         RenderWindow window;
@@ -44,8 +30,6 @@ namespace SFMLLogic
 
         public void DrawRectangle(Point top_left_coordinate, float width, float height, Colour color, string name)
         {
-
-
             switch (name)
             {
                 case "white_pixel":
